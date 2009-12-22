@@ -1,7 +1,7 @@
 <tab icon="/icons/big_export.png" text="HTTP Trigger" name=":httpTrigger">
     <panel bottom="9" columns="2" gap="9" left="9" right="9" top="9" weightx="1" weighty="1">
     	<panel gap="9">
-    		<label text="Port"/>
+    		<label text="i18n.httptrigger.port.select"/>
     		<textfield name="tfPort"/>
 		   	<button text="Start" name="btStart" action="startListener(tfPort.text)" icon="/icons/month_up.png"/>
 		   	<button text="Stop" name="btStop" action="stopListener" enabled="false" icon="/icons/delete.png"/>
