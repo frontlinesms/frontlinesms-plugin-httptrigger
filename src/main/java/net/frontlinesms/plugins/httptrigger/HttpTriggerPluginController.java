@@ -79,6 +79,7 @@ public class HttpTriggerPluginController extends BasePluginController implements
 	/** @see HttpTriggerEventListener#log(String) */
 	public void log(String message) {
 		this.tabController.log(message);
+		this.log.trace(message);
 	}
 	
 	/** @see net.frontlinesms.plugins.httptrigger.HttpTriggerEventListener#sendSms(java.lang.String, java.lang.String) */

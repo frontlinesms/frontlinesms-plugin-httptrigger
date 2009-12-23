@@ -3,23 +3,16 @@
  */
 package net.frontlinesms.plugins.httptrigger;
 
+import net.frontlinesms.plugins.BasePluginThinletTabController;
 import net.frontlinesms.ui.ThinletUiEventHandler;
 import net.frontlinesms.ui.UiGeneratorController;
 
 /**
  * @author Alex
  */
-public class HttpTriggerThinletTabController implements ThinletUiEventHandler {
+public class HttpTriggerThinletTabController extends BasePluginThinletTabController<HttpTriggerPluginController> implements ThinletUiEventHandler {
 
 //> STATIC CONSTANTS
-
-//> INSTANCE PROPERTIES
-	/** Controller for the plugin */
-	private final HttpTriggerPluginController httpTriggerController;
-	/** Thinlet UI controller */
-	private final UiGeneratorController uiController;
-	/** Thinlet tab component which this class controls UI methods for. */
-	private Object httpTriggerTab;
 
 //> CONSTRUCTORS
 	/**
@@ -27,13 +20,7 @@ public class HttpTriggerThinletTabController implements ThinletUiEventHandler {
 	 * @param uiController value for {@link #uiController}
 	 */
 	public HttpTriggerThinletTabController(HttpTriggerPluginController httpTriggerController, UiGeneratorController uiController) {
-		this.httpTriggerController = httpTriggerController;
-		this.uiController = uiController;
-	}
-
-	/** @param httpTriggerTab value for {@link #httpTriggerTab} */
-	public void setTabComponent(Object httpTriggerTab) {
-		this.httpTriggerTab = httpTriggerTab;
+		super(httpTriggerController, uiController);
 	}
 	
 //> PUBLIC UI METHODS
@@ -42,7 +29,9 @@ public class HttpTriggerThinletTabController implements ThinletUiEventHandler {
 	 * setup, and start it on the suggested port.
 	 * @param portNumberAsString The port number to connect to, as a String.  This will be ignored if {@link Integer#parseInt(String)} fails on it.
 	 */
-	public void startListener(String portNumberAsString) {
+	public void startListener() {
+		String portNumberAsString = uiController.getText(getPortTextfield());
+		
 		int portNumber;
 		try {
 			portNumber = Integer.parseInt(portNumberAsString.trim());
@@ -53,14 +42,13 @@ public class HttpTriggerThinletTabController implements ThinletUiEventHandler {
 		}
 
 		// Stop the old listener, if one is running
-		this.httpTriggerController.stopListener();
+		this.getPluginController().stopListener();
 		
 		// Start the new listener
-		this.httpTriggerController.startListener(portNumber);
+		this.getPluginController().startListener(portNumber);
 		
-		// Disable the start button and enable the stop button
-		uiController.setEnabled(getStartButton(), false);
-		uiController.setEnabled(getStopButton(), true);
+		// Enable and disable relevant fields
+		enableFields(true);
 	}
 	
 	/**
@@ -69,35 +57,39 @@ public class HttpTriggerThinletTabController implements ThinletUiEventHandler {
 	 */
 	public void stopListener() {
 		// Stop the listener
-		this.httpTriggerController.stopListener();
-		
-		// Disable the stop button and enable the start button
-		uiController.setEnabled(getStartButton(), true);
-		uiController.setEnabled(getStopButton(), false);
+		this.getPluginController().stopListener();
+
+		// Enable and disable relevant fields
+		enableFields(false);
 	}
 	
-//> UIGC PASS-THROUGH METHODS
 	/**
-	 * Removes all children of a component.
-	 * @param listComponent The component whose children will be removed
-	 * @see UiGeneratorController#removeAll(Object)
+	 * Enable and disable UI components as appropriate for whether the listener is running or is stopped.
+	 * @param running <code>true</code> if the listener has running; <code>false</code> otherwise.
 	 */
-	public void removeAll(Object listComponent) {
-		this.uiController.removeAll(listComponent);
+	private void enableFields(boolean running) {
+		uiController.setEnabled(getStartButton(), !running);
+		uiController.setEnabled(getPortTextfield(), !running);
+		uiController.setEnabled(getStopButton(), running);
+		
 	}
 	
 //> ACCESSORS
 	/** @return Thinlet button for starting the listener */
 	private Object getStartButton() {
-		return uiController.find(this.httpTriggerTab, "btStart");
+		return find("btStart");
 	}
 	/** @return Thinlet button for stopping */
 	private Object getStopButton() {
-		return uiController.find(this.httpTriggerTab, "btStop");
+		return find("btStop");
+	}
+	/** @return Thinlet textfield for setting the port */
+	private Object getPortTextfield() {
+		return find("tfPort");
 	}
 	/** @return Thinlet list containing log entries */
 	private Object getLogList() {
-		return uiController.find(this.httpTriggerTab, "lsHttpTriggerLog");
+		return find("lsHttpTriggerLog");
 	}
 	
 //> EVENT LISTENER METHODS
