@@ -18,7 +18,7 @@ import net.frontlinesms.ui.UiGeneratorController;
  * @author Alex
  */
 @PluginControllerProperties(name="HTTP Trigger", iconPath="/icons/import.png", springConfigLocation=PluginControllerProperties.NO_VALUE, hibernateConfigPath=PluginControllerProperties.NO_VALUE)
-public class HttpTriggerPluginController extends BasePluginController implements ThinletUiEventHandler, HttpTriggerEventListener {
+public class HttpTriggerPluginController extends BasePluginController implements HttpTriggerEventListener {
 //> STATIC CONSTANTS
 	/** Filename and path of the XML for the HTTP Trigger tab. */
 	private static final String UI_FILE_TAB = "/ui/plugins/httptrigger/httpTriggerTab.xml";

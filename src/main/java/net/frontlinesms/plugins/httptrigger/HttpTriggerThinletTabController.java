@@ -4,13 +4,12 @@
 package net.frontlinesms.plugins.httptrigger;
 
 import net.frontlinesms.plugins.BasePluginThinletTabController;
-import net.frontlinesms.ui.ThinletUiEventHandler;
 import net.frontlinesms.ui.UiGeneratorController;
 
 /**
  * @author Alex
  */
-public class HttpTriggerThinletTabController extends BasePluginThinletTabController<HttpTriggerPluginController> implements ThinletUiEventHandler {
+public class HttpTriggerThinletTabController extends BasePluginThinletTabController<HttpTriggerPluginController> {
 
 //> STATIC CONSTANTS
 
