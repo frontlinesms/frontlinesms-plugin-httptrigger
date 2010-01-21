@@ -16,10 +16,10 @@ public class HttpTriggerThinletTabController extends BasePluginThinletTabControl
 //> CONSTRUCTORS
 	/**
 	 * @param httpTriggerController value for {@link #httpTriggerController}
-	 * @param uiController value for {@link #uiController}
+	 * @param ui value for {@link #ui}
 	 */
-	public HttpTriggerThinletTabController(HttpTriggerPluginController httpTriggerController, UiGeneratorController uiController) {
-		super(httpTriggerController, uiController);
+	public HttpTriggerThinletTabController(HttpTriggerPluginController httpTriggerController, UiGeneratorController ui) {
+		super(httpTriggerController, ui);
 	}
 	
 //> PUBLIC UI METHODS
@@ -29,14 +29,14 @@ public class HttpTriggerThinletTabController extends BasePluginThinletTabControl
 	 * @param portNumberAsString The port number to connect to, as a String.  This will be ignored if {@link Integer#parseInt(String)} fails on it.
 	 */
 	public void startListener() {
-		String portNumberAsString = uiController.getText(getPortTextfield());
+		String portNumberAsString = ui.getText(getPortTextfield());
 		
 		int portNumber;
 		try {
 			portNumber = Integer.parseInt(portNumberAsString.trim());
 		} catch(NumberFormatException ex) {
 			// Port number failed to parse.  Warn the user and do not change the state of the listener 
-			this.uiController.alert("This is not a valid port number."); // FIXME i18n
+			this.ui.alert("This is not a valid port number."); // FIXME i18n
 			return;
 		}
 
@@ -67,9 +67,9 @@ public class HttpTriggerThinletTabController extends BasePluginThinletTabControl
 	 * @param running <code>true</code> if the listener has running; <code>false</code> otherwise.
 	 */
 	private void enableFields(boolean running) {
-		uiController.setEnabled(getStartButton(), !running);
-		uiController.setEnabled(getPortTextfield(), !running);
-		uiController.setEnabled(getStopButton(), running);
+		ui.setEnabled(getStartButton(), !running);
+		ui.setEnabled(getPortTextfield(), !running);
+		ui.setEnabled(getStopButton(), running);
 		
 	}
 	
@@ -99,7 +99,7 @@ public class HttpTriggerThinletTabController extends BasePluginThinletTabControl
 	 */
 	public void log(String message) {
 		// TODO add timestamp to this list item
-		uiController.add(getLogList(), uiController.createListItem(message, null), 0);
+		ui.add(getLogList(), ui.createListItem(message, null), 0);
 	}
 
 //> INSTANCE HELPER METHODS
