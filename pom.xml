@@ -95,7 +95,7 @@
 		<dependency>
 			<groupId>net.frontlinesms.core</groupId>
 			<artifactId>frontlinesms</artifactId>
-			<version>1.6.08-SNAPSHOT</version>
+			<version>1.6.08-RC3</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
