@@ -3,7 +3,7 @@
 	<groupId>net.frontlinesms.plugins</groupId>
 	<artifactId>frontlinesms-plugin-httptrigger</artifactId>
 	<name>FrontlineSMS HTTP Trigger plugin</name>
-	<version>0.01.02-SNAPSHOT</version>
+	<version>0.01.02</version>
 	<description>HTTP Trigger plugin for FrontlineSMS</description>
 	<licenses>
 		<license>
