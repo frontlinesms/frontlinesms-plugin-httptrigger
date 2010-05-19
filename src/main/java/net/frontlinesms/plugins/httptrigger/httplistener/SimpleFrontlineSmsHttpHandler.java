@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.frontlinesms.Utils;
 import net.frontlinesms.plugins.httptrigger.HttpTriggerEventListener;
+import net.frontlinesms.ui.i18n.InternationalisationUtils;
 
 import org.mortbay.jetty.HttpConnection;
 import org.mortbay.jetty.HttpURI;
@@ -31,6 +32,12 @@ class SimpleFrontlineSmsHttpHandler extends AbstractHandler {
 	private final HttpTriggerEventListener eventListener;
 	/** Handlers for different URL mappings. */
 	private final LinkedList<SimpleUrlRequestHandler> handlers = new LinkedList<SimpleUrlRequestHandler>();
+	
+	private final String I18N_NO_HANDLER_FOUND = "plugins.httptrigger.no.handler.found";
+	private final String I18N_NOT_ENOUGH_PARAMS = "plugins.httptrigger.not.enough.params";
+	private final String I18N_PROCESSING_REQUEST = "plugins.httptrigger.processing.request";
+	private final String I18N_TEST_TRIGGER_TRIPPED = "plugins.httptrigger.test.trigger.tripped";
+	
 
 //> CONSTRUCTORS
 	/**
@@ -45,7 +52,7 @@ class SimpleFrontlineSmsHttpHandler extends AbstractHandler {
 			@Override
 			public boolean handle(String[] requestParts) {
 				// URL triggered this handler successfully, so log it and return true
-				SimpleFrontlineSmsHttpHandler.this.eventListener.log("The test trigger has been tripped."); // FIXME i18n
+				SimpleFrontlineSmsHttpHandler.this.eventListener.log(InternationalisationUtils.getI18NString(I18N_TEST_TRIGGER_TRIPPED));
 				return true;
 			}
 		});
@@ -55,7 +62,7 @@ class SimpleFrontlineSmsHttpHandler extends AbstractHandler {
 			public boolean handle(String[] requestParts) {
 				// N.B. the request parts will ignore message parts if there are non-URL-encoded / characters in the message.  This is intentional.
 				if(requestParts.length < 2) {
-					SimpleFrontlineSmsHttpHandler.this.eventListener.log("Not enough params in SEND SMS request."); // FIXME i18n
+					SimpleFrontlineSmsHttpHandler.this.eventListener.log(InternationalisationUtils.getI18NString(I18N_NOT_ENOUGH_PARAMS));
 					return false;
 				}
 				String toPhoneNumber = requestParts[0];
@@ -100,7 +107,7 @@ class SimpleFrontlineSmsHttpHandler extends AbstractHandler {
 	 * @return <code>true</code> if the event was processed successfully; <code>false</code> if there was no processor available, or processing failed. 
 	 */
 	private boolean processRequestFromUrl(final HttpURI requestUri) {
-		eventListener.log("Processing request: " + requestUri);
+		this.eventListener.log(InternationalisationUtils.getI18NString(I18N_PROCESSING_REQUEST, requestUri.toString()));
 
 		// Get this URI string, stripping leading '/' character
 		String requestUriString = requestUri.toString().substring(1);
@@ -111,7 +118,7 @@ class SimpleFrontlineSmsHttpHandler extends AbstractHandler {
 			}
 		}
 		
-		this.eventListener.log("No handler found for request: " + requestUriString); // FIXME i18n
+		this.eventListener.log(InternationalisationUtils.getI18NString(I18N_NO_HANDLER_FOUND, requestUriString));
 		return false;
 	}
 

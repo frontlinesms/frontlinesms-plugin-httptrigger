@@ -12,6 +12,7 @@ import net.frontlinesms.plugins.PluginInitialisationException;
 import net.frontlinesms.plugins.httptrigger.httplistener.HttpTriggerServer;
 import net.frontlinesms.ui.ThinletUiEventHandler;
 import net.frontlinesms.ui.UiGeneratorController;
+import net.frontlinesms.ui.i18n.InternationalisationUtils;
 
 /**
  * This plugin controls an HTTP listener for triggering SMS from outside FrontlineSMS.
@@ -30,6 +31,10 @@ public class HttpTriggerPluginController extends BasePluginController implements
 	private HttpTriggerThinletTabController tabController;
 	/** the {@link FrontlineSMS} instance that this plugin is attached to */
 	private FrontlineSMS frontlineController;
+
+	private final String I18N_SENDING_TO = "plugins.httptrigger.sending.to";
+
+	private final String I18N_LISTENER_STOPPING = "plugins.httptrigger.listener.stopping";
 
 //> CONSTRUCTORS
 
@@ -68,7 +73,7 @@ public class HttpTriggerPluginController extends BasePluginController implements
 	public void stopListener() {
 		if(this.httpListener != null) {
 			this.httpListener.pleaseStop();
-			this.log("Listener stopping: " + this.httpListener);
+			this.log(InternationalisationUtils.getI18NString(I18N_LISTENER_STOPPING, this.httpListener.toString()));
 			this.httpListener = null;
 		}
 	}
@@ -84,7 +89,7 @@ public class HttpTriggerPluginController extends BasePluginController implements
 	
 	/** @see net.frontlinesms.plugins.httptrigger.HttpTriggerEventListener#sendSms(java.lang.String, java.lang.String) */
 	public void sendSms(String toPhoneNumber, String message) {
-		this.log("Sending SMS to " + toPhoneNumber + ": " + message);
+		this.log(InternationalisationUtils.getI18NString(I18N_SENDING_TO, toPhoneNumber, message));
 		frontlineController.sendTextMessage(toPhoneNumber, message);
 	}
 

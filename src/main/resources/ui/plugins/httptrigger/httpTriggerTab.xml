@@ -3,10 +3,10 @@
     	<label icon="/icons/header/httpTrigger.png" valign="top" />
        	<panel columns="1" weighty="1" weightx="1" gap="8" rowspan="2">
 			<panel gap="9">
-	    		<label text="i18n.httptrigger.port.select"/>
+	    		<label text="i18n.plugins.httptrigger.port.select"/>
 	   			<textfield name="tfPort"/>
-				<button text="Start" name="btStart" action="startListener" icon="/icons/month_up.png"/>
-				<button text="Stop" name="btStop" action="stopListener" enabled="false" icon="/icons/delete.png"/>
+				<button text="i18n.plugins.httptrigger.start" name="btStart" action="startListener" icon="/icons/month_up.png"/>
+				<button text="i18n.plugins.httptrigger.stop" name="btStop" action="stopListener" enabled="false" icon="/icons/delete.png"/>
 			</panel>
 			<list name="lsHttpTriggerLog" weightx="1" weighty="1" colspan="2"/>
 	       	<button action="removeAll(lsHttpTriggerLog)" icon="/icons/clear.png" name="btClear" text="i18n.action.clear" halign="right"/>

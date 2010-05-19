@@ -6,6 +6,7 @@ package net.frontlinesms.plugins.httptrigger.httplistener;
 import net.frontlinesms.Utils;
 import net.frontlinesms.plugins.httptrigger.HttpTriggerEventListener;
 import net.frontlinesms.plugins.httptrigger.HttpTriggerListener;
+import net.frontlinesms.ui.i18n.InternationalisationUtils;
 
 import org.apache.log4j.Logger;
 import org.mortbay.jetty.Connector;
@@ -29,6 +30,9 @@ public class HttpTriggerServer extends Thread implements HttpTriggerListener {
 	private final int port;
 	/** The Jetty server that will listen for HTTP connections. */
 	private final Server server;
+	private final String I18N_STARTING_ON_PORT = "plugins.httptrigger.starting.on.port";
+	private final String I18N_TERMINATED_ON_PORT = "plugins.httptrigger.terminated.on.port";
+	private final String I18N_TERMINATING_ON_PORT = "plugins.httptrigger.terminating.on.port";
 
 //> CONSTRUCTORS
 	/**
@@ -61,7 +65,7 @@ public class HttpTriggerServer extends Thread implements HttpTriggerListener {
 //> INSTANCE METHODS
 	/** Start listening. */
 	public void run() {
-		this.eventListener.log("Starting on port: " + this.getPort());
+		this.eventListener.log(InternationalisationUtils.getI18NString(I18N_STARTING_ON_PORT, String.valueOf(this.getPort())));
 		try {
 			server.start();
 		} catch (Exception ex) {
@@ -78,12 +82,12 @@ public class HttpTriggerServer extends Thread implements HttpTriggerListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.eventListener.log("Listener terminated on port: " + this.getPort());
+		this.eventListener.log(InternationalisationUtils.getI18NString(I18N_TERMINATED_ON_PORT, String.valueOf(this.getPort())));//"Listener terminated on port: " + this.getPort());
 	}
 
 	/** Request the server to stop listening. */
 	public void pleaseStop() {
-		this.eventListener.log("Terminating listener on port: " + this.getPort());
+		this.eventListener.log(InternationalisationUtils.getI18NString(I18N_TERMINATING_ON_PORT, String.valueOf(this.getPort())));//"Terminating listener on port: " + this.getPort());
 		try {
 			this.server.stop();
 		} catch (Exception ex) {
