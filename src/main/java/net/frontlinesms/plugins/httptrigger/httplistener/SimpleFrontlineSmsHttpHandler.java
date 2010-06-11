@@ -10,7 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.frontlinesms.Utils;
+import net.frontlinesms.FrontlineUtils;
 import net.frontlinesms.plugins.httptrigger.HttpTriggerEventListener;
 import net.frontlinesms.ui.i18n.InternationalisationUtils;
 
@@ -68,7 +68,7 @@ class SimpleFrontlineSmsHttpHandler extends AbstractHandler {
 				String toPhoneNumber = requestParts[0];
 				String message = requestParts[1];
 				
-				SimpleFrontlineSmsHttpHandler.this.eventListener.sendSms(Utils.urlDecode(toPhoneNumber), Utils.urlDecode(message));
+				SimpleFrontlineSmsHttpHandler.this.eventListener.sendSms(FrontlineUtils.urlDecode(toPhoneNumber), FrontlineUtils.urlDecode(message));
 				
 				return true;
 			}

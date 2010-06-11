@@ -3,7 +3,7 @@
  */
 package net.frontlinesms.plugins.httptrigger.httplistener;
 
-import net.frontlinesms.Utils;
+import net.frontlinesms.FrontlineUtils;
 import net.frontlinesms.plugins.httptrigger.HttpTriggerEventListener;
 import net.frontlinesms.plugins.httptrigger.HttpTriggerListener;
 import net.frontlinesms.ui.i18n.InternationalisationUtils;
@@ -23,7 +23,7 @@ public class HttpTriggerServer extends Thread implements HttpTriggerListener {
 
 //> INSTANCE PROPERTIES
 	/** Logging object */
-	private final Logger log = Utils.getLogger(this.getClass());
+	private final Logger log = FrontlineUtils.getLogger(this.getClass());
 	/** The listener for HTTP events */
 	private final HttpTriggerEventListener eventListener;
 	/** The port on which we will listen for incoming HTTP connections */
