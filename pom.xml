@@ -34,7 +34,7 @@
 	
 	<scm>
 		<connection>scm:git://frontlinesms.git.sourceforge.net/gitroot/frontlinesms/plugin-httptrigger.git</connection>
-		<developerConnection>scm:git:ssh://alexandergeorge@frontlinesms.git.sourceforge.net/gitroot/frontlinesms/plugin-httptrigger</developerConnection>
+		<developerConnection>scm:git:ssh://${sourceforge.username}@frontlinesms.git.sourceforge.net/gitroot/frontlinesms/plugin-httptrigger</developerConnection>
 	</scm>
 	
 	<repositories>
