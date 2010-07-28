@@ -122,4 +122,8 @@
 			<version>6.0.2</version>
 		</dependency>
 	</dependencies>
+<<<<<<< HEAD
 </project>
+=======
+</project> 
+>>>>>>> origin/master
