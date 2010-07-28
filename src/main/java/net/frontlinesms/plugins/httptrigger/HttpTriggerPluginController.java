@@ -10,7 +10,6 @@ import net.frontlinesms.plugins.BasePluginController;
 import net.frontlinesms.plugins.PluginControllerProperties;
 import net.frontlinesms.plugins.PluginInitialisationException;
 import net.frontlinesms.plugins.httptrigger.httplistener.HttpTriggerServer;
-import net.frontlinesms.ui.ThinletUiEventHandler;
 import net.frontlinesms.ui.UiGeneratorController;
 import net.frontlinesms.ui.i18n.InternationalisationUtils;
 
