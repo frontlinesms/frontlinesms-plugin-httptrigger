@@ -104,7 +104,7 @@
 		<dependency>
 			<groupId>net.frontlinesms.core</groupId>
 			<artifactId>frontlinesms</artifactId>
-			<version>1.6.14</version>
+			<version>1.6.15-RC1</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -122,8 +122,4 @@
 			<version>6.0.2</version>
 		</dependency>
 	</dependencies>
-<<<<<<< HEAD
 </project>
-=======
-</project> 
->>>>>>> origin/master
