@@ -79,7 +79,7 @@ private static String I18N_INVALID_PORT_NUMBER = "plugins.httptrigger.invalid.po
 	 * Enable and disable UI components as appropriate for whether the listener is running or is stopped.
 	 * @param running <code>true</code> if the listener has running; <code>false</code> otherwise.
 	 */
-	private void enableFields(boolean running) {
+	public void enableFields(boolean running) {
 		ui.setEnabled(getStartButton(), !running);
 		ui.setEnabled(getPortTextfield(), !running);
 		ui.setEnabled(getStopButton(), running);

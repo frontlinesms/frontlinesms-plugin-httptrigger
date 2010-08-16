@@ -51,6 +51,7 @@ public class HttpTriggerPluginController extends BasePluginController implements
 			// Starting here is little different from starting in init() with the
 			// current plugin lifecycle - the plugin is only enabled when visible.
 			this.startListener();
+			tabController.enableFields(true);
 		}
 		
 		return httpTriggerTab;
