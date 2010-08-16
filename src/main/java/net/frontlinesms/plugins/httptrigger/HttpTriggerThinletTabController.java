@@ -16,13 +16,20 @@ public class HttpTriggerThinletTabController extends BasePluginThinletTabControl
 
 private static String I18N_INVALID_PORT_NUMBER = "plugins.httptrigger.invalid.port.number";
 
-	//> CONSTRUCTORS
+//> CONSTRUCTORS
 	/**
 	 * @param httpTriggerController value for {@link #httpTriggerController}
 	 * @param ui value for {@link #ui}
 	 */
 	public HttpTriggerThinletTabController(HttpTriggerPluginController httpTriggerController, UiGeneratorController ui) {
 		super(httpTriggerController, ui);
+	}
+
+	public void initFields() {
+		// Set initial value for fields
+		HttpTriggerProperties httpTriggerProperties = HttpTriggerProperties.getInstance();
+		ui.setText(getPortTextfield(), Integer.toString(httpTriggerProperties.getListenPort()));
+		ui.setSelected(getAutostartCheckbox(), httpTriggerProperties.isAutostart());
 	}
 	
 //> PUBLIC UI METHODS
@@ -32,25 +39,16 @@ private static String I18N_INVALID_PORT_NUMBER = "plugins.httptrigger.invalid.po
 	 * @param portNumberAsString The port number to connect to, as a String.  This will be ignored if {@link Integer#parseInt(String)} fails on it.
 	 */
 	public void startListener() {
-		String portNumberAsString = ui.getText(getPortTextfield());
-		
-		int portNumber;
-		try {
-			portNumber = Integer.parseInt(portNumberAsString.trim());
-		} catch(NumberFormatException ex) {
-			// Port number failed to parse.  Warn the user and do not change the state of the listener 
-			this.ui.alert(InternationalisationUtils.getI18NString(I18N_INVALID_PORT_NUMBER));
-			return;
+		if(updateSettings()) {
+			// Stop the old listener, if one is running
+			this.getPluginController().stopListener();
+			
+			// Start the new listener
+			this.getPluginController().startListener();
+			
+			// Enable and disable relevant fields
+			enableFields(true);
 		}
-
-		// Stop the old listener, if one is running
-		this.getPluginController().stopListener();
-		
-		// Start the new listener
-		this.getPluginController().startListener(portNumber);
-		
-		// Enable and disable relevant fields
-		enableFields(true);
 	}
 	
 	/**
@@ -65,6 +63,18 @@ private static String I18N_INVALID_PORT_NUMBER = "plugins.httptrigger.invalid.po
 		enableFields(false);
 	}
 	
+	/** Updates the setting for autostart of the listener */
+	public void setAutostart(boolean value) {
+		// We save the properties here AND THEN call updateSettings() so that
+		// this checkbox is not left in an inconsistent state.  We still want to
+		// call updateSettings() in case the port number has been changed.
+		HttpTriggerProperties properties = HttpTriggerProperties.getInstance();
+		properties.setAutostart(value);
+		properties.saveToDisk();
+		
+		updateSettings();
+	}
+	
 	/**
 	 * Enable and disable UI components as appropriate for whether the listener is running or is stopped.
 	 * @param running <code>true</code> if the listener has running; <code>false</code> otherwise.
@@ -74,6 +84,33 @@ private static String I18N_INVALID_PORT_NUMBER = "plugins.httptrigger.invalid.po
 		ui.setEnabled(getPortTextfield(), !running);
 		ui.setEnabled(getStopButton(), running);
 		
+	}
+	
+	/**
+	 * If this method returns false, it has probably displayed a popup, so you should stop
+	 * doing what you're doing!
+	 * @return <code>true</code> if the settings were successfully updated; <code>false</code>
+	 * if there was a problem
+	 */
+	private boolean updateSettings() {
+		String portNumberAsString = ui.getText(getPortTextfield());
+		
+		int portNumber;
+		try {
+			portNumber = Integer.parseInt(portNumberAsString.trim());
+		} catch(NumberFormatException ex) {
+			// Port number failed to parse.  Warn the user and do not change the state of the listener 
+			this.ui.alert(InternationalisationUtils.getI18NString(I18N_INVALID_PORT_NUMBER));
+			return false;
+		}
+		
+		// Save the port number
+		HttpTriggerProperties properties = HttpTriggerProperties.getInstance();
+		properties.setListenPort(portNumber);
+		properties.setAutostart(ui.isSelected(getAutostartCheckbox()));
+		properties.saveToDisk();
+		
+		return true;
 	}
 	
 //> ACCESSORS
@@ -88,6 +125,10 @@ private static String I18N_INVALID_PORT_NUMBER = "plugins.httptrigger.invalid.po
 	/** @return Thinlet textfield for setting the port */
 	private Object getPortTextfield() {
 		return find("tfPort");
+	}
+	/** @return Thinlet checkbox indicating autostart status */
+	private Object getAutostartCheckbox() {
+		return find("cbAutostart");
 	}
 	/** @return Thinlet list containing log entries */
 	private Object getLogList() {
