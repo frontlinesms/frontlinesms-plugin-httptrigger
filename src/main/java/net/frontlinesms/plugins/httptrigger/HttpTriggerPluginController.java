@@ -44,6 +44,15 @@ public class HttpTriggerPluginController extends BasePluginController implements
 
 		Object httpTriggerTab = uiController.loadComponentFromFile(UI_FILE_TAB, tabController);
 		tabController.setTabComponent(httpTriggerTab);
+		tabController.initFields();
+		
+		if(HttpTriggerProperties.getInstance().isAutostart()) {
+			// Start the listener here so that all fields are updated properly.
+			// Starting here is little different from starting in init() with the
+			// current plugin lifecycle - the plugin is only enabled when visible.
+			this.startListener();
+			tabController.enableFields(true);
+		}
 		
 		return httpTriggerTab;
 	}
@@ -60,10 +69,10 @@ public class HttpTriggerPluginController extends BasePluginController implements
 
 	/**
 	 * Start the HTTP listener.  If there is another listener already running, it will be stopped. 
-	 * @param portNumber The port to start listening on
 	 */
-	public void startListener(int portNumber) {
+	public void startListener() {
 		this.stopListener();
+		int portNumber = HttpTriggerProperties.getInstance().getListenPort();
 		this.httpListener = new HttpTriggerServer(this, portNumber);
 		this.httpListener.start();
 	}
@@ -82,7 +91,9 @@ public class HttpTriggerPluginController extends BasePluginController implements
 //> HTEL METHODS
 	/** @see HttpTriggerEventListener#log(String) */
 	public void log(String message) {
-		this.tabController.log(message);
+		if(this.tabController != null) {
+			this.tabController.log(message);
+		}
 		this.log.trace(message);
 	}
 	

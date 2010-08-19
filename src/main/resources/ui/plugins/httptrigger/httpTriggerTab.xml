@@ -2,13 +2,15 @@
     <panel bottom="9" columns="2" gap="9" left="9" right="9" top="9" weightx="1" weighty="1">
     	<label icon="/icons/header/httpTrigger.png" valign="top" />
        	<panel columns="1" weighty="1" weightx="1" gap="8" rowspan="2">
-			<panel gap="9">
+			<panel gap="9" columns="4">
 	    		<label text="i18n.plugins.httptrigger.port.select"/>
 	   			<textfield name="tfPort"/>
 				<button text="i18n.plugins.httptrigger.start" name="btStart" action="startListener" icon="/icons/month_up.png"/>
 				<button text="i18n.plugins.httptrigger.stop" name="btStop" action="stopListener" enabled="false" icon="/icons/delete.png"/>
+				
+				<checkbox text="i18n.plugins.httptrigger.autostart" colspan="4" action="setAutostart(this.selected)" name="cbAutostart"/>
 			</panel>
-			<list name="lsHttpTriggerLog" weightx="1" weighty="1" colspan="2"/>
+			<list name="lsHttpTriggerLog" weightx="1" weighty="1"/>
 	       	<button action="removeAll(lsHttpTriggerLog)" icon="/icons/clear.png" name="btClear" text="i18n.action.clear" halign="right"/>
 		</panel>
    		<button tooltip="i18n.tooltip.click.for.help" valign="bottom" action="showHelpPage('httptrigger.htm')" icon="/icons/big_help.png" type="link"/>
