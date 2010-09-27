@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel border="true" name="pnAppearance" columns="1" gap="5" weightx="2">
+	<label text="This is the panel for the 'Appearance' section of the HTTP Trigger!!"/>
+	<button text="i18n.action.ok" halign="center" icon="/icons/tick.png"/>
+</panel>

@@ -9,6 +9,7 @@ import net.frontlinesms.FrontlineSMS;
 import net.frontlinesms.plugins.BasePluginController;
 import net.frontlinesms.plugins.PluginControllerProperties;
 import net.frontlinesms.plugins.PluginInitialisationException;
+import net.frontlinesms.plugins.PluginSettingsController;
 import net.frontlinesms.plugins.httptrigger.httplistener.HttpTriggerServer;
 import net.frontlinesms.ui.UiGeneratorController;
 import net.frontlinesms.ui.i18n.InternationalisationUtils;
@@ -28,6 +29,8 @@ public class HttpTriggerPluginController extends BasePluginController implements
 	private HttpTriggerListener httpListener;
 	/** Thinlet tab controller for this plugin */
 	private HttpTriggerThinletTabController tabController;
+	/** Thinlet tab controller for this plugin */
+	private HttpTriggerSettingsController settingsHandler;
 	/** the {@link FrontlineSMS} instance that this plugin is attached to */
 	private FrontlineSMS frontlineController;
 
@@ -106,4 +109,8 @@ public class HttpTriggerPluginController extends BasePluginController implements
 //> STATIC FACTORIES
 
 //> STATIC HELPER METHODS
+
+	public PluginSettingsController getSettingsController(UiGeneratorController uiController) {
+		return new HttpTriggerSettingsController(this, uiController);
+	}
 }
