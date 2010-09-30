@@ -18,17 +18,13 @@ public class HttpTriggerSettingsController implements ThinletUiEventHandler, Plu
 		this.uiController = uiController;
 	}
 
-
 	public String getTitle() {
 		return this.pluginController.getName(InternationalisationUtils.getCurrentLocale());
 	}
 	
-	public Object getRootSettingsNode() {
-		Object rootSettingsNode = this.uiController.createNode(getTitle(), this.pluginController.getClass().getName());
+	public void addSubSettingsNodes(Object rootSettingsNode) {
 		this.uiController.add(rootSettingsNode, this.uiController.createNode("Appearance", SECTION_APPEARANCE));
-		this.uiController.add(rootSettingsNode, this.uiController.createNode("Test", "test"));
-		
-		return rootSettingsNode;
+		this.uiController.add(rootSettingsNode, this.uiController.createNode("Test", "TEST"));
 	}
 	
 	public Object getPanelForSection(String section) {
@@ -41,6 +37,11 @@ public class HttpTriggerSettingsController implements ThinletUiEventHandler, Plu
 				return null;
 		}
 	}
+
+	public Object getRootPanel() {
+		return null;
+	}
+
 
 	private Object getTestPanel() {
 		// TODO Auto-generated method stub
