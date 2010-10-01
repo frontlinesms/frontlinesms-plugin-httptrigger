@@ -1,13 +1,15 @@
 package net.frontlinesms.plugins.httptrigger;
 
 import net.frontlinesms.plugins.PluginSettingsController;
+import net.frontlinesms.plugins.httptrigger.ui.HttpTriggerSettingsAppearanceSectionHandler;
+import net.frontlinesms.plugins.httptrigger.ui.HttpTriggerSettingsRootSectionHandler;
+import net.frontlinesms.settings.FrontlineValidationMessage;
 import net.frontlinesms.ui.ThinletUiEventHandler;
 import net.frontlinesms.ui.UiGeneratorController;
+import net.frontlinesms.ui.UiSettingsSectionHandler;
 import net.frontlinesms.ui.i18n.InternationalisationUtils;
 
 public class HttpTriggerSettingsController implements ThinletUiEventHandler, PluginSettingsController {
-	private static final String UI_SECTION_APPEARANCE = "/ui/plugins/httptrigger/settings/pnAppearance.xml";
-
 	private static final Object SECTION_APPEARANCE = "APPEARANCE";
 
 	private UiGeneratorController uiController;
@@ -27,34 +29,26 @@ public class HttpTriggerSettingsController implements ThinletUiEventHandler, Plu
 		this.uiController.add(rootSettingsNode, this.uiController.createNode("Test", "TEST"));
 	}
 	
-	public Object getPanelForSection(String section) {
-		switch (HttpTriggerSettingsSections.valueOf(section)) {
-			case APPEARANCE:
-				return getAppearancePanel();
-			case TEST:
-				return getTestPanel();
-			default:
-				return null;
-		}
-	}
-
-	public Object getRootPanel() {
+	public FrontlineValidationMessage validateFields() {
 		return null;
-	}
-
-
-	private Object getTestPanel() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	private Object getAppearancePanel() {
-		return uiController.loadComponentFromFile(UI_SECTION_APPEARANCE, this);
 	}
 	
 	enum HttpTriggerSettingsSections {
 		APPEARANCE,
 		TEST
+	}
+
+	public UiSettingsSectionHandler getHandlerForSection(String section) {
+		switch (HttpTriggerSettingsSections.valueOf(section)) {
+			case APPEARANCE:
+				return new HttpTriggerSettingsAppearanceSectionHandler(this.uiController);
+			default:
+				return null;
+		}
+	}
+
+	public UiSettingsSectionHandler getRootPanelHandler() {
+		return new HttpTriggerSettingsRootSectionHandler(this.uiController);
 	}
 
 }
