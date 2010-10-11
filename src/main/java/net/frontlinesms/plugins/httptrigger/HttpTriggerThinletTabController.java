@@ -3,6 +3,12 @@
  */
 package net.frontlinesms.plugins.httptrigger;
 
+import static net.frontlinesms.ui.UiGeneratorControllerConstants.COMPONENT_TF_COST_PER_SMS;
+import net.frontlinesms.AppProperties;
+import net.frontlinesms.events.AppPropertiesEventNotification;
+import net.frontlinesms.events.EventBus;
+import net.frontlinesms.events.EventObserver;
+import net.frontlinesms.events.FrontlineEventNotification;
 import net.frontlinesms.plugins.BasePluginThinletTabController;
 import net.frontlinesms.ui.UiGeneratorController;
 import net.frontlinesms.ui.i18n.InternationalisationUtils;
@@ -10,11 +16,12 @@ import net.frontlinesms.ui.i18n.InternationalisationUtils;
 /**
  * @author Alex
  */
-public class HttpTriggerThinletTabController extends BasePluginThinletTabController<HttpTriggerPluginController> {
+public class HttpTriggerThinletTabController extends BasePluginThinletTabController<HttpTriggerPluginController> implements EventObserver {
 
 //> STATIC CONSTANTS
 
 private static String I18N_INVALID_PORT_NUMBER = "plugins.httptrigger.invalid.port.number";
+private EventBus eventBus;
 
 //> CONSTRUCTORS
 	/**
@@ -23,6 +30,9 @@ private static String I18N_INVALID_PORT_NUMBER = "plugins.httptrigger.invalid.po
 	 */
 	public HttpTriggerThinletTabController(HttpTriggerPluginController httpTriggerController, UiGeneratorController ui) {
 		super(httpTriggerController, ui);
+		
+		this.eventBus = ui.getFrontlineController().getEventBus();
+		this.eventBus.registerObserver(this);
 	}
 
 	public void initFields() {
@@ -61,6 +71,8 @@ private static String I18N_INVALID_PORT_NUMBER = "plugins.httptrigger.invalid.po
 
 		// Enable and disable relevant fields
 		enableFields(false);
+		
+		ui.setText(getPortTextfield(), Integer.toString(HttpTriggerProperties.getInstance().getListenPort()));
 	}
 	
 	/** Updates the setting for autostart of the listener */
@@ -144,6 +156,24 @@ private static String I18N_INVALID_PORT_NUMBER = "plugins.httptrigger.invalid.po
 	public void log(String message) {
 		// TODO add timestamp to this list item
 		ui.add(getLogList(), ui.createListItem(message, null), 0);
+	}
+
+	public void notify(FrontlineEventNotification notification) {
+		if (notification instanceof AppPropertiesEventNotification) {
+			// An AppProperty has been changed
+			AppPropertiesEventNotification appPropertiesNotification = (AppPropertiesEventNotification) notification;
+			
+			if (appPropertiesNotification.getAppClass().equals(HttpTriggerProperties.class)) {
+				if (appPropertiesNotification.getProperty().equals(HttpTriggerProperties.PROP_AUTOSTART)) {
+					ui.setSelected(getAutostartCheckbox(), HttpTriggerProperties.getInstance().isAutostart());
+				} else if (appPropertiesNotification.getProperty().equals(HttpTriggerProperties.PROP_LISTEN_PORT)
+						&& !this.getPluginController().isRunning()) {
+					// We update the port if the server is not currently running
+					// Otherwise, it will be done when it stops
+					ui.setText(getPortTextfield(), Integer.toString(HttpTriggerProperties.getInstance().getListenPort()));
+				}
+			}
+		}
 	}
 
 //> INSTANCE HELPER METHODS

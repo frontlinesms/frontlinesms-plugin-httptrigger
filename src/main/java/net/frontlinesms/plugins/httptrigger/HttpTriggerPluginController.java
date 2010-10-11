@@ -29,8 +29,6 @@ public class HttpTriggerPluginController extends BasePluginController implements
 	private HttpTriggerListener httpListener;
 	/** Thinlet tab controller for this plugin */
 	private HttpTriggerThinletTabController tabController;
-	/** Thinlet tab controller for this plugin */
-	private HttpTriggerSettingsController settingsHandler;
 	/** the {@link FrontlineSMS} instance that this plugin is attached to */
 	private FrontlineSMS frontlineController;
 
@@ -87,6 +85,10 @@ public class HttpTriggerPluginController extends BasePluginController implements
 			this.log(InternationalisationUtils.getI18NString(I18N_LISTENER_STOPPING, this.httpListener.toString()));
 			this.httpListener = null;
 		}
+	}
+	
+	public boolean isRunning() {
+		return this.httpListener != null;
 	}
 
 //> INSTANCE HELPER METHODS
