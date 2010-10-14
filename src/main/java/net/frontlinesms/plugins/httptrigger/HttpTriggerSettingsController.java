@@ -9,8 +9,6 @@ import net.frontlinesms.ui.i18n.InternationalisationUtils;
 import net.frontlinesms.ui.settings.UiSettingsSectionHandler;
 
 public class HttpTriggerSettingsController implements ThinletUiEventHandler, PluginSettingsController {
-	private static final Object SECTION_APPEARANCE = "APPEARANCE";
-
 	private UiGeneratorController uiController;
 	private HttpTriggerPluginController pluginController;
 
