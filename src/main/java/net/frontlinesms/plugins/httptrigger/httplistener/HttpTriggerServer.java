@@ -40,7 +40,7 @@ public class HttpTriggerServer extends Thread implements HttpTriggerListener {
 	 * @param eventListener value for {@link #eventListener}
 	 * @param port value for {@link #port}
 	 */
-	public HttpTriggerServer(HttpTriggerEventListener eventListener, int port) {
+	public HttpTriggerServer(HttpTriggerEventListener eventListener, SimpleUrlRequestHandler groovyRequestHandler, int port) {
 		// Give this Thread a meaningful name
 		super(HttpTriggerServer.class.getSimpleName() + "; port: " + port);
 		
@@ -52,7 +52,7 @@ public class HttpTriggerServer extends Thread implements HttpTriggerListener {
 		connector.setPort(port);
 		server.setConnectors(new Connector[]{connector});
 		
-		Handler handler = new SimpleFrontlineSmsHttpHandler(this.eventListener);
+		Handler handler = new SimpleFrontlineSmsHttpHandler(this.eventListener, groovyRequestHandler);
 		server.setHandler(handler);
 	}
 
@@ -98,25 +98,25 @@ public class HttpTriggerServer extends Thread implements HttpTriggerListener {
 //> STATIC FACTORIES
 
 //> STATIC HELPER METHODS
-	/**
-	 * Run the server from the commandline
-	 * @param args 
-	 */
-	public static void main(String[] args) {
-		HttpTriggerServer serv = new HttpTriggerServer(new CommandLineTriggerEventListener(), 1440);
-		serv.start();
-		
-		boolean running = true;
-		while(running) {
-			System.out.println("sleeping...");
-			try {
-				Thread.sleep(5000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-				running = false;
-			}
-		}
-	}
+//	/**
+//	 * Run the server from the commandline
+//	 * @param args 
+//	 */
+//	public static void main(String[] args) {
+//		HttpTriggerServer serv = new HttpTriggerServer(new CommandLineTriggerEventListener(), 1440);
+//		serv.start();
+//		
+//		boolean running = true;
+//		while(running) {
+//			System.out.println("sleeping...");
+//			try {
+//				Thread.sleep(5000);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//				running = false;
+//			}
+//		}
+//	}
 }
 
 /**

@@ -121,5 +121,18 @@
 			<artifactId>jetty-util</artifactId>
 			<version>6.0.2</version>
 		</dependency>
+		<dependency>
+			<groupId>org.codehaus.groovy</groupId>
+			<artifactId>groovy</artifactId>
+			<version>1.7.4</version>
+		</dependency>
+		
+				<!-- Test Dependencies -->
+		<dependency>
+			<groupId>net.frontlinesms.core</groupId>
+			<artifactId>frontlinesms-test</artifactId>
+			<version>0.01.01</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 </project>

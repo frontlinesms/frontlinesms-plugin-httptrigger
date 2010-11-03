@@ -5,15 +5,12 @@ package net.frontlinesms.plugins.httptrigger.httplistener;
 
 import java.io.IOException;
 import java.util.LinkedList;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import net.frontlinesms.FrontlineUtils;
 import net.frontlinesms.plugins.httptrigger.HttpTriggerEventListener;
 import net.frontlinesms.ui.i18n.InternationalisationUtils;
-
 import org.mortbay.jetty.HttpConnection;
 import org.mortbay.jetty.HttpURI;
 import org.mortbay.jetty.Request;
@@ -38,13 +35,12 @@ class SimpleFrontlineSmsHttpHandler extends AbstractHandler {
 	private final String I18N_PROCESSING_REQUEST = "plugins.httptrigger.processing.request";
 	private final String I18N_TEST_TRIGGER_TRIPPED = "plugins.httptrigger.test.trigger.tripped";
 	
-
 //> CONSTRUCTORS
 	/**
 	 * Create a new {@link SimpleFrontlineSmsHttpHandler}.
 	 * @param eventListener value for {@link #eventListener}.
 	 */
-	SimpleFrontlineSmsHttpHandler(HttpTriggerEventListener eventListener) {
+	SimpleFrontlineSmsHttpHandler(HttpTriggerEventListener eventListener, SimpleUrlRequestHandler groovyRequestHandler) {
 		this.eventListener = eventListener;
 		
 		// Add handler for TEST command - just check if the server is running
@@ -73,6 +69,8 @@ class SimpleFrontlineSmsHttpHandler extends AbstractHandler {
 				return true;
 			}
 		});
+		
+		this.handlers.add(groovyRequestHandler);
 	}
 
 //> ACCESSORS

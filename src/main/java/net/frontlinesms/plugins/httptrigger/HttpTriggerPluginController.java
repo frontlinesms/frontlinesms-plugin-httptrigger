@@ -9,7 +9,9 @@ import net.frontlinesms.FrontlineSMS;
 import net.frontlinesms.plugins.BasePluginController;
 import net.frontlinesms.plugins.PluginControllerProperties;
 import net.frontlinesms.plugins.PluginInitialisationException;
+import net.frontlinesms.plugins.httptrigger.httplistener.GroovyUrlRequestHandler;
 import net.frontlinesms.plugins.httptrigger.httplistener.HttpTriggerServer;
+import net.frontlinesms.plugins.httptrigger.httplistener.UrlMapper;
 import net.frontlinesms.ui.UiGeneratorController;
 import net.frontlinesms.ui.i18n.InternationalisationUtils;
 
@@ -17,7 +19,9 @@ import net.frontlinesms.ui.i18n.InternationalisationUtils;
  * This plugin controls an HTTP listener for triggering SMS from outside FrontlineSMS.
  * @author Alex
  */
-@PluginControllerProperties(name="HTTP Trigger", i18nKey="plugins.httptrigger.name", iconPath="/icons/import.png", springConfigLocation=PluginControllerProperties.NO_VALUE, hibernateConfigPath=PluginControllerProperties.NO_VALUE)
+@PluginControllerProperties(name="HTTP Trigger", i18nKey="plugins.httptrigger.name", iconPath="/icons/import.png", 
+		springConfigLocation="classpath:net/frontlinesms/plugins/httptrigger/httptrigger-spring-hibernate.xml",
+		hibernateConfigPath=PluginControllerProperties.NO_VALUE)
 public class HttpTriggerPluginController extends BasePluginController implements HttpTriggerEventListener {
 //> STATIC CONSTANTS
 	/** Filename and path of the XML for the HTTP Trigger tab. */
@@ -30,9 +34,8 @@ public class HttpTriggerPluginController extends BasePluginController implements
 	private HttpTriggerThinletTabController tabController;
 	/** the {@link FrontlineSMS} instance that this plugin is attached to */
 	private FrontlineSMS frontlineController;
-
+	private GroovyUrlRequestHandler groovyUrlRequestHandler;
 	private final String I18N_SENDING_TO = "plugins.httptrigger.sending.to";
-
 	private final String I18N_LISTENER_STOPPING = "plugins.httptrigger.listener.stopping";
 
 //> CONSTRUCTORS
@@ -41,7 +44,8 @@ public class HttpTriggerPluginController extends BasePluginController implements
 	/** @see net.frontlinesms.plugins.PluginController#getTab(net.frontlinesms.ui.UiGeneratorController) */
 	public Object initThinletTab(UiGeneratorController uiController) {
 		this.tabController = new HttpTriggerThinletTabController(this, uiController);
-
+		
+		
 		Object httpTriggerTab = uiController.loadComponentFromFile(UI_FILE_TAB, tabController);
 		tabController.setTabComponent(httpTriggerTab);
 		tabController.initFields();
@@ -60,6 +64,10 @@ public class HttpTriggerPluginController extends BasePluginController implements
 	/** @see net.frontlinesms.plugins.PluginController#init(net.frontlinesms.FrontlineSMS, org.springframework.context.ApplicationContext) */
 	public void init(FrontlineSMS frontlineController, ApplicationContext applicationContext) throws PluginInitialisationException {
 		this.frontlineController = frontlineController;
+
+		UrlMapper urlMapper = UrlMapper.create(); // TODO get paths from config file
+
+		this.groovyUrlRequestHandler = new GroovyUrlRequestHandler(frontlineController, urlMapper);
 	}
 	
 	/** @see net.frontlinesms.plugins.PluginController#deinit() */
@@ -73,7 +81,7 @@ public class HttpTriggerPluginController extends BasePluginController implements
 	public void startListener() {
 		this.stopListener();
 		int portNumber = HttpTriggerProperties.getInstance().getListenPort();
-		this.httpListener = new HttpTriggerServer(this, portNumber);
+		this.httpListener = new HttpTriggerServer(this, groovyUrlRequestHandler, portNumber);
 		this.httpListener.start();
 	}
 
