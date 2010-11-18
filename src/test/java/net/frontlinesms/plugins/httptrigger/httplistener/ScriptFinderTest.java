@@ -14,27 +14,27 @@ public class ScriptFinderTest extends TestCase {
 		testMapToFileFails("/sms/send");
 		testMapToFileFails("/sms/send/");
 		
-		testMapToFileSucceeds( "sms/send.groovy", "sms/send" );
-		testMapToFileSucceeds( "sms/send.groovy", "sms/send/" );
-		testMapToFileSucceeds( "sms/receive.groovy", "sms/receive" );
-		testMapToFileSucceeds( "sms/send.groovy", "sms/send///" );
-		testMapToFileSucceeds( "quite/a/long/file/location/receive.groovy", "quite/a/long/file/location/receive" );
-		testMapToFileSucceeds( "send.groovy" , "send" );
-		testMapToFileSucceeds( "index.groovy", "");
-		testMapToFileSucceeds( "index.groovy", null);
+		testMapToFileSucceeds("sms" + File.separator + "send.groovy", "sms/send");
+		testMapToFileSucceeds("sms" + File.separator + "send.groovy", "sms/send/");
+		testMapToFileSucceeds("sms" + File.separator + "receive.groovy", "sms/receive");
+		testMapToFileSucceeds("sms" + File.separator + "send.groovy", "sms/send///");
+		testMapToFileSucceeds("quite" + File.separator + "a" + File.separator + "long" + File.separator + "file" + File.separator + "location" + File.separator + "receive.groovy", "quite/a/long/file/location/receive");
+		testMapToFileSucceeds("send.groovy" , "send");
+		testMapToFileSucceeds("index.groovy", "");
+		testMapToFileSucceeds("index.groovy", null);
 	}
 
 	private void testMapToFileSucceeds(String modifiedPath, String originalPath) {
 		File file = new ScriptFinder().mapToFile(originalPath);
-		assertEquals( modifiedPath, file.getPath());
+		assertEquals(modifiedPath, file.getPath());
 	}
 
 	private void testMapToFileFails(String path) {
 		ScriptFinder scriptFinder = new ScriptFinder();
-		try{
+		try {
 			scriptFinder.mapToFile(path);
 			fail("We should have thrown an exception for path: " + path);
-		}catch(IllegalArgumentException ex){
+		} catch(IllegalArgumentException ex){
 		}
 	}
 }
