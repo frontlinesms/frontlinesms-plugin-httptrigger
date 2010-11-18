@@ -3,7 +3,6 @@ package net.frontlinesms.plugins.httptrigger.ui;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.frontlinesms.AppProperties;
 import net.frontlinesms.events.AppPropertiesEventNotification;
 import net.frontlinesms.plugins.httptrigger.HttpTriggerProperties;
 import net.frontlinesms.settings.BaseSectionHandler;
@@ -25,11 +24,9 @@ public class HttpTriggerSettingsRootSectionHandler extends BaseSectionHandler im
 	public HttpTriggerSettingsRootSectionHandler (UiGeneratorController ui, String pluginName) {
 		super(ui);
 		this.pluginName = pluginName;
-		
-		this.init();
 	}
 	
-	private void init() {
+	protected void init() {
 		this.panel = uiController.loadComponentFromFile(UI_SECTION_ROOT, this);
 		
 		HttpTriggerProperties httpTriggerProperties = HttpTriggerProperties.getInstance();
@@ -85,5 +82,9 @@ public class HttpTriggerSettingsRootSectionHandler extends BaseSectionHandler im
 
 	public String getTitle() {
 		return this.pluginName;
+	}
+
+	public Object getSectionNode(String pluginIcon) {
+		return createSectionNode(getTitle(), this, pluginIcon);
 	}
 }

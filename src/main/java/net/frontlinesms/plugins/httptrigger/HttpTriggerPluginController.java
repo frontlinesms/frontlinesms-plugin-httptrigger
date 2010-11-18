@@ -113,6 +113,6 @@ public class HttpTriggerPluginController extends BasePluginController implements
 //> STATIC HELPER METHODS
 
 	public PluginSettingsController getSettingsController(UiGeneratorController uiController) {
-		return new HttpTriggerSettingsController(this, uiController);
+		return new HttpTriggerSettingsController(this, uiController, getIcon(this.getClass()));
 	}
 }

@@ -11,10 +11,12 @@ import net.frontlinesms.ui.settings.UiSettingsSectionHandler;
 public class HttpTriggerSettingsController implements ThinletUiEventHandler, PluginSettingsController {
 	private UiGeneratorController uiController;
 	private HttpTriggerPluginController pluginController;
+	private String pluginIcon;
 
-	public HttpTriggerSettingsController(HttpTriggerPluginController pluginController, UiGeneratorController uiController) {
+	public HttpTriggerSettingsController(HttpTriggerPluginController pluginController, UiGeneratorController uiController, String pluginIcon) {
 		this.pluginController = pluginController;
 		this.uiController = uiController;
+		this.pluginIcon = pluginIcon;
 	}
 
 	public String getTitle() {
@@ -34,6 +36,11 @@ public class HttpTriggerSettingsController implements ThinletUiEventHandler, Plu
 
 	public UiSettingsSectionHandler getRootPanelHandler() {
 		return new HttpTriggerSettingsRootSectionHandler(this.uiController, this.getTitle());
+	}
+
+	public Object getRootNode() {
+		HttpTriggerSettingsRootSectionHandler rootHandler = new HttpTriggerSettingsRootSectionHandler(this.uiController, this.getTitle());
+		return rootHandler.getSectionNode(pluginIcon);
 	}
 
 }

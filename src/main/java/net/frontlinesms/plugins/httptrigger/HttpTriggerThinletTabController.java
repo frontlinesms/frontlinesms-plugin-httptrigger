@@ -3,8 +3,6 @@
  */
 package net.frontlinesms.plugins.httptrigger;
 
-import static net.frontlinesms.ui.UiGeneratorControllerConstants.COMPONENT_TF_COST_PER_SMS;
-import net.frontlinesms.AppProperties;
 import net.frontlinesms.events.AppPropertiesEventNotification;
 import net.frontlinesms.events.EventBus;
 import net.frontlinesms.events.EventObserver;
@@ -163,6 +161,7 @@ private EventBus eventBus;
 			// An AppProperty has been changed
 			AppPropertiesEventNotification appPropertiesNotification = (AppPropertiesEventNotification) notification;
 			
+			// If the changes concern the Http Trigger properties
 			if (appPropertiesNotification.getAppClass().equals(HttpTriggerProperties.class)) {
 				if (appPropertiesNotification.getProperty().equals(HttpTriggerProperties.PROP_AUTOSTART)) {
 					ui.setSelected(getAutostartCheckbox(), HttpTriggerProperties.getInstance().isAutostart());
