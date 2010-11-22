@@ -20,9 +20,7 @@ import net.frontlinesms.ui.i18n.InternationalisationUtils;
  * This plugin controls an HTTP listener for triggering SMS from outside FrontlineSMS.
  * @author Alex
  */
-@PluginControllerProperties(name="HTTP Trigger", i18nKey="plugins.httptrigger.name", iconPath="/icons/import.png", 
-		springConfigLocation="classpath:net/frontlinesms/plugins/httptrigger/httptrigger-spring-hibernate.xml",
-		hibernateConfigPath=PluginControllerProperties.NO_VALUE)
+@PluginControllerProperties(name="HTTP Trigger", i18nKey="plugins.httptrigger.name", iconPath="/icons/import.png", hibernateConfigPath = PluginControllerProperties.NO_VALUE, springConfigLocation = PluginControllerProperties.NO_VALUE)
 public class HttpTriggerPluginController extends BasePluginController implements HttpTriggerEventListener {
 //> STATIC CONSTANTS
 	/** Filename and path of the XML for the HTTP Trigger tab. */
