@@ -44,10 +44,15 @@ public class HttpTriggerPluginController extends BasePluginController implements
 	public Object initThinletTab(UiGeneratorController uiController) {
 		this.tabController = new HttpTriggerThinletTabController(this, uiController);
 		
-		
 		Object httpTriggerTab = uiController.loadComponentFromFile(UI_FILE_TAB, tabController);
 		tabController.setTabComponent(httpTriggerTab);
 		tabController.initFields();
+		
+		String[] scriptPaths = HttpTriggerProperties.getInstance().getScriptPaths();
+		log("Loaded script paths: " + scriptPaths.length);
+		for (int i = 0; i < scriptPaths.length; i++) {
+			log("script " + i + ". localhost:" + HttpTriggerProperties.getInstance().getListenPort() + "/" + scriptPaths[i]);
+		}
 		
 		if(HttpTriggerProperties.getInstance().isAutostart()) {
 			// Start the listener here so that all fields are updated properly.
@@ -64,9 +69,10 @@ public class HttpTriggerPluginController extends BasePluginController implements
 	public void init(FrontlineSMS frontlineController, ApplicationContext applicationContext) throws PluginInitialisationException {
 		this.frontlineController = frontlineController;
 
-		UrlMapper urlMapper = UrlMapper.create(); // TODO get paths from config file
+		String[] scriptPaths = HttpTriggerProperties.getInstance().getScriptPaths();
+		UrlMapper urlMapper = UrlMapper.create(scriptPaths);
 
-		this.groovyUrlRequestHandler = new GroovyUrlRequestHandler(frontlineController, urlMapper);
+		this.groovyUrlRequestHandler = new GroovyUrlRequestHandler(this, frontlineController, urlMapper);
 	}
 	
 	/** @see net.frontlinesms.plugins.PluginController#deinit() */
