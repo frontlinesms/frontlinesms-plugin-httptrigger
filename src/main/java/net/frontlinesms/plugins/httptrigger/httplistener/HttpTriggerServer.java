@@ -98,25 +98,6 @@ public class HttpTriggerServer extends Thread implements HttpTriggerListener {
 //> STATIC FACTORIES
 
 //> STATIC HELPER METHODS
-//	/**
-//	 * Run the server from the commandline
-//	 * @param args 
-//	 */
-//	public static void main(String[] args) {
-//		HttpTriggerServer serv = new HttpTriggerServer(new CommandLineTriggerEventListener(), 1440);
-//		serv.start();
-//		
-//		boolean running = true;
-//		while(running) {
-//			System.out.println("sleeping...");
-//			try {
-//				Thread.sleep(5000);
-//			} catch (InterruptedException e) {
-//				e.printStackTrace();
-//				running = false;
-//			}
-//		}
-//	}
 }
 
 /**
