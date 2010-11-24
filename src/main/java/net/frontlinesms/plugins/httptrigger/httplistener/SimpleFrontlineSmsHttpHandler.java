@@ -83,28 +83,32 @@ class SimpleFrontlineSmsHttpHandler extends AbstractHandler {
 		
 		response.setContentType("text/html");
 		
-		boolean success = processRequestFromUrl(baseRequest.getUri());
+		ResponseType responseType = processRequestFromUrl(baseRequest.getUri(), request, response);
 
-		final int httpStatusCode;
-		final String responseContent;
-		if(success) {
-			httpStatusCode = HttpServletResponse.SC_OK;
-			responseContent = "OK";
-		} else {
-			httpStatusCode = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
-			responseContent = "ERROR";
+		if(responseType != ResponseType.HANDLED) {
+			final int httpStatusCode;
+			final String responseContent;
+			if(responseType == ResponseType.SUCCESS) {
+				httpStatusCode = HttpServletResponse.SC_OK;
+				responseContent = "OK";
+			} else {
+				httpStatusCode = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
+				responseContent = "ERROR";
+			}
+			response.setStatus(httpStatusCode);
+			response.getWriter().println(responseContent);
 		}
-		response.setStatus(httpStatusCode);
-		response.getWriter().println(responseContent);
 	}
 	
 //> INSTANCE HELPER METHODS
 	/**
 	 * Process request from the URL.
 	 * @param requestUri 
+	 * @param response 
+	 * @param request 
 	 * @return <code>true</code> if the event was processed successfully; <code>false</code> if there was no processor available, or processing failed. 
 	 */
-	private boolean processRequestFromUrl(final HttpURI requestUri) {
+	private ResponseType processRequestFromUrl(final HttpURI requestUri, HttpServletRequest request, HttpServletResponse response) {
 		this.eventListener.log(InternationalisationUtils.getI18NString(I18N_PROCESSING_REQUEST, requestUri.toString()));
 
 		// Get this URI string, stripping leading '/' character
@@ -112,12 +116,12 @@ class SimpleFrontlineSmsHttpHandler extends AbstractHandler {
 		
 		for(SimpleUrlRequestHandler handler : this.handlers) {
 			if(handler.shouldHandle(requestUriString)) {
-				return handler.handle(requestUriString);
+				return handler.handle(requestUriString, request, response);
 			}
 		}
 		
 		this.eventListener.log(InternationalisationUtils.getI18NString(I18N_NO_HANDLER_FOUND, requestUriString));
-		return false;
+		return ResponseType.FAILURE;
 	}
 
 //> STATIC FACTORIES

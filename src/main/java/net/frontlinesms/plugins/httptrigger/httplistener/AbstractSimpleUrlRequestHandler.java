@@ -3,6 +3,9 @@
  */
 package net.frontlinesms.plugins.httptrigger.httplistener;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author Alex
  */
@@ -30,11 +33,12 @@ public abstract class AbstractSimpleUrlRequestHandler implements SimpleUrlReques
 	/**
 	 * Handle a request for a given URI.  This method splits the URI using {@link #getRequestParts(String)}, and passes
 	 * these parts to {@link #handle(String[])}.
-	 * @see SimpleUrlRequestHandler#handle(String)
+	 * @see SimpleUrlRequestHandler#handle(String, HttpServletRequest, HttpServletResponse)
 	 */
-	public boolean handle(String requestUri) {
+	public ResponseType handle(String requestUri, HttpServletRequest request, HttpServletResponse response) {
 		assert shouldHandle(requestUri) : "This URI should not be handled here.";
-		return this.handle(this.getRequestParts(requestUri));
+		boolean success = this.handle(this.getRequestParts(requestUri));
+		return success ? ResponseType.SUCCESS : ResponseType.FAILURE;
 	}
 	
 	/**

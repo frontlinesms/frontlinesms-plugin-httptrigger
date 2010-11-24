@@ -2,14 +2,23 @@ package net.frontlinesms.plugins.httptrigger.httplistener;
 
 import java.io.File;
 
+import net.frontlinesms.resources.ResourceUtils;
+
 /**
  * Class that decides which script to use according to a specific URL
  * 
  * @author Gonçalo Silva
+ * @author Alex Anderson <alex@frontlinesms.com>
  */
 public class ScriptFinder {
+	private final File scriptDirectory;
 	
-// > ISTANCE METHODS
+//> CONSTRUCTORS
+	public ScriptFinder() {
+		this.scriptDirectory = new File(ResourceUtils.getConfigDirectoryPath(), "httptrigger.scripts");
+	}
+	
+//> INSTANCE METHODS
 	/**
 	 * Determines which script to call with the passed URI
 	 * 
@@ -20,7 +29,7 @@ public class ScriptFinder {
 	public File mapToFile(String path) {
 
 		if(path == null || path.equals("")){
-			return new File("index.groovy");
+			path = "index";
 		}
 		
 		if(path.charAt(0) == '/'){
@@ -33,6 +42,11 @@ public class ScriptFinder {
 		
 		path += ".groovy";
 		
-		return new File(path);
+		return new File(getScriptDirectory(), path);
+	}
+
+	/** @return the root directory that scripts are stored in */
+	private File getScriptDirectory() {
+		return this.scriptDirectory;
 	}
 }

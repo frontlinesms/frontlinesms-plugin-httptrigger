@@ -2,7 +2,6 @@ package net.frontlinesms.plugins.httptrigger;
 
 import net.frontlinesms.plugins.PluginSettingsController;
 import net.frontlinesms.plugins.httptrigger.ui.HttpTriggerSettingsRootSectionHandler;
-import net.frontlinesms.settings.FrontlineValidationMessage;
 import net.frontlinesms.ui.ThinletUiEventHandler;
 import net.frontlinesms.ui.UiGeneratorController;
 import net.frontlinesms.ui.i18n.InternationalisationUtils;
@@ -23,15 +22,10 @@ public class HttpTriggerSettingsController implements ThinletUiEventHandler, Plu
 		return this.pluginController.getName(InternationalisationUtils.getCurrentLocale());
 	}
 	
-	public void addSubSettingsNodes(Object rootSettingsNode) {
-	}
-	
-	public FrontlineValidationMessage validateFields() {
-		return null;
-	}
+	public void addSubSettingsNodes(Object rootSettingsNode) {}
 	
 	public UiSettingsSectionHandler getHandlerForSection(String section) {
-			return null;
+		return null;
 	}
 
 	public UiSettingsSectionHandler getRootPanelHandler() {
