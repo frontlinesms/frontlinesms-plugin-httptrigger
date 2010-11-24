@@ -7,7 +7,6 @@
 	   			<textfield name="tfPort"/>
 				<button text="i18n.plugins.httptrigger.start" name="btStart" action="startListener" icon="/icons/month_up.png"/>
 				<button text="i18n.plugins.httptrigger.stop" name="btStop" action="stopListener" enabled="false" icon="/icons/delete.png"/>
-				
 				<checkbox text="i18n.plugins.httptrigger.autostart" colspan="4" action="setAutostart(this.selected)" name="cbAutostart"/>
 			</panel>
 			<list name="lsHttpTriggerLog" weightx="1" weighty="1"/>
