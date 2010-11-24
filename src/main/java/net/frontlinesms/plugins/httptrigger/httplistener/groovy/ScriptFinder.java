@@ -1,4 +1,4 @@
-package net.frontlinesms.plugins.httptrigger.httplistener;
+package net.frontlinesms.plugins.httptrigger.httplistener.groovy;
 
 import java.io.File;
 
@@ -10,7 +10,7 @@ import net.frontlinesms.resources.ResourceUtils;
  * @author Gonçalo Silva
  * @author Alex Anderson <alex@frontlinesms.com>
  */
-public class ScriptFinder {
+class ScriptFinder {
 	private final File scriptDirectory;
 	
 //> CONSTRUCTORS

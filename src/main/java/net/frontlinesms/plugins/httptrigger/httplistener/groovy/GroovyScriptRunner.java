@@ -1,4 +1,4 @@
-package net.frontlinesms.plugins.httptrigger.httplistener;
+package net.frontlinesms.plugins.httptrigger.httplistener.groovy;
 
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 import net.frontlinesms.ErrorUtils;
 import net.frontlinesms.FrontlineSMS;
 import net.frontlinesms.FrontlineUtils;
+import net.frontlinesms.plugins.httptrigger.httplistener.ResponseType;
 
 /**
  * Class which will handle the script calls to the Groovy shell
@@ -20,7 +21,7 @@ import net.frontlinesms.FrontlineUtils;
  * @author Gonçalo Silva
  *
  */
-public class GroovyScriptRunner {
+class GroovyScriptRunner {
 	
 //> INSTANCE PROPERTIES
 	private final Logger log = FrontlineUtils.getLogger(this.getClass());

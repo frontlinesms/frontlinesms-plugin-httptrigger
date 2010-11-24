@@ -1,8 +1,8 @@
-package net.frontlinesms.plugins.httptrigger.httplistener;
+package net.frontlinesms.plugins.httptrigger.httplistener.groovy;
 
 import java.io.File;
 
-import net.frontlinesms.plugins.httptrigger.httplistener.ScriptFinder;
+import net.frontlinesms.plugins.httptrigger.httplistener.groovy.ScriptFinder;
 
 import junit.framework.TestCase;
 

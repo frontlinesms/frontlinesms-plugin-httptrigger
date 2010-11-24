@@ -1,4 +1,4 @@
-package net.frontlinesms.plugins.httptrigger.httplistener;
+package net.frontlinesms.plugins.httptrigger.httplistener.groovy;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,6 +11,8 @@ import org.apache.log4j.Logger;
 import net.frontlinesms.FrontlineSMS;
 import net.frontlinesms.FrontlineUtils;
 import net.frontlinesms.plugins.httptrigger.HttpTriggerEventListener;
+import net.frontlinesms.plugins.httptrigger.httplistener.ResponseType;
+import net.frontlinesms.plugins.httptrigger.httplistener.SimpleUrlRequestHandler;
 
 /**
  * Class to Handle calls to the {@link GroovyScriptRunner} given a URI Request

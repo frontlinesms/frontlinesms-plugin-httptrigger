@@ -1,4 +1,4 @@
-package net.frontlinesms.plugins.httptrigger.httplistener;
+package net.frontlinesms.plugins.httptrigger.httplistener.groovy;
 
 import java.util.Arrays;
 import java.util.Comparator;

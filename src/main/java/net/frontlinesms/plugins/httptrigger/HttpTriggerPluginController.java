@@ -10,9 +10,9 @@ import net.frontlinesms.plugins.BasePluginController;
 import net.frontlinesms.plugins.PluginControllerProperties;
 import net.frontlinesms.plugins.PluginInitialisationException;
 import net.frontlinesms.plugins.PluginSettingsController;
-import net.frontlinesms.plugins.httptrigger.httplistener.GroovyUrlRequestHandler;
+import net.frontlinesms.plugins.httptrigger.httplistener.groovy.GroovyUrlRequestHandler;
+import net.frontlinesms.plugins.httptrigger.httplistener.groovy.UrlMapper;
 import net.frontlinesms.plugins.httptrigger.httplistener.HttpTriggerServer;
-import net.frontlinesms.plugins.httptrigger.httplistener.UrlMapper;
 import net.frontlinesms.ui.UiGeneratorController;
 import net.frontlinesms.ui.i18n.InternationalisationUtils;
 
