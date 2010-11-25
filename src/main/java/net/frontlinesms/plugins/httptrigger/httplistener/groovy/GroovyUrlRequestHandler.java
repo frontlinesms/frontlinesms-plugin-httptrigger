@@ -42,10 +42,7 @@ public class GroovyUrlRequestHandler implements SimpleUrlRequestHandler {
 	 * @see net.frontlinesms.plugins.httptrigger.httplistener.SimpleUrlRequestHandler#shouldHandle(java.lang.String)
 	 */
 	public boolean shouldHandle(String requestUri) {
-		String scriptPath = urlMapper.mapToPath(requestUri);
-		File script = scriptFinder.mapToFile(scriptPath);
-		log.info("Checking for script at: " + script.getAbsolutePath());
-		return script.isFile();
+		return true;
 	}
 
 	/**
@@ -54,14 +51,20 @@ public class GroovyUrlRequestHandler implements SimpleUrlRequestHandler {
 	public ResponseType handle(String requestUri, HttpServletRequest request, HttpServletResponse response) {
 		String scriptPath = urlMapper.mapToPath(requestUri);
 		File groovyScript = scriptFinder.mapToFile(scriptPath);
-		listener.log("URL mapped to script: " + groovyScript.getAbsolutePath());
 		
-		GroovyScriptRunner scriptRunner = new GroovyScriptRunner(groovyScript,
-				new String[]{"boss", "request", "response", "log", "out"},
-				new Object[]{frontlineController, request, response, listener, getPrinter(response)});
-		ResponseType run = scriptRunner.run();
-		listener.log("Script execution complete.");
-		return run;
+		if(!groovyScript.isFile()) {
+			listener.log("Script not found: " + groovyScript.getAbsolutePath());
+			return ResponseType.FAILURE;
+		} else {
+			listener.log("URL mapped to script: " + groovyScript.getAbsolutePath());
+		
+			GroovyScriptRunner scriptRunner = new GroovyScriptRunner(groovyScript,
+					new String[]{"boss", "request", "response", "log", "out"},
+					new Object[]{frontlineController, request, response, listener, getPrinter(response)});
+			ResponseType run = scriptRunner.run();
+			listener.log("Script execution complete.");
+			return run;
+		}
 	}
 
 //> ACCESSORS

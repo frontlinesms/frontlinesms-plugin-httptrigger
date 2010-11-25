@@ -48,10 +48,10 @@ public class HttpTriggerPluginController extends BasePluginController implements
 		tabController.setTabComponent(httpTriggerTab);
 		tabController.initFields();
 		
-		String[] scriptPaths = HttpTriggerProperties.getInstance().getScriptPaths();
+		String[] scriptPaths = HttpTriggerProperties.getInstance().getScriptFilePaths();
 		log("Loaded script paths: " + scriptPaths.length);
 		for (int i = 0; i < scriptPaths.length; i++) {
-			log("script " + i + ". localhost:" + HttpTriggerProperties.getInstance().getListenPort() + "/" + scriptPaths[i]);
+			log("Script " + i + ". http://localhost:" + HttpTriggerProperties.getInstance().getListenPort() + "/" + scriptPaths[i]);
 		}
 		
 		if(HttpTriggerProperties.getInstance().isAutostart()) {
@@ -69,8 +69,8 @@ public class HttpTriggerPluginController extends BasePluginController implements
 	public void init(FrontlineSMS frontlineController, ApplicationContext applicationContext) throws PluginInitialisationException {
 		this.frontlineController = frontlineController;
 
-		String[] scriptPaths = HttpTriggerProperties.getInstance().getScriptPaths();
-		UrlMapper urlMapper = UrlMapper.create(scriptPaths);
+		String[] scriptFilePaths = HttpTriggerProperties.getInstance().getScriptFilePaths();
+		UrlMapper urlMapper = UrlMapper.create(scriptFilePaths);
 
 		this.groovyUrlRequestHandler = new GroovyUrlRequestHandler(this, frontlineController, urlMapper);
 	}

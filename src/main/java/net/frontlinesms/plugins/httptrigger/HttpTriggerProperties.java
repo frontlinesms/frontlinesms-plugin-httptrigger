@@ -17,7 +17,7 @@ public class HttpTriggerProperties extends UserHomeFilePropertySet {
 //> PROPERTY KEYS
 	public static final String PROP_AUTOSTART = "listener.autostart"; // FIXME this should be private
 	public static final String PROP_LISTEN_PORT = "listener.port"; // FIXME this should be private
-	private static final String PROP_SCRIPT_PATHS = "script.path";
+	private static final String PROP_SCRIPT_FILE_PATHS = "script.file.path";
 	
 	/** Singleton instance of this class */
 	private static HttpTriggerProperties INSTANCE;
@@ -43,8 +43,8 @@ public class HttpTriggerProperties extends UserHomeFilePropertySet {
 		super.setPropertyAsBoolean(PROP_AUTOSTART, value);
 	}
 
-	public String[] getScriptPaths() {
-		return super.getPropertyValues(PROP_SCRIPT_PATHS);
+	public String[] getScriptFilePaths() {
+		return super.getPropertyValues(PROP_SCRIPT_FILE_PATHS);
 	}
 
 //> STATIC FACTORIES

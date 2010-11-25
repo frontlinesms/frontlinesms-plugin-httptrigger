@@ -28,19 +28,21 @@ class ScriptFinder {
 	 */
 	public File mapToFile(String path) {
 
-		if(path == null || path.equals("")){
-			path = "index";
+		if(path == null || path.length() == 0){
+			path = "index.groovy";
+		} else {
+			if(path.charAt(0) == '/'){
+				throw new IllegalArgumentException();
+			}
+	
+			while(path.endsWith("/")){
+				path = path.substring(0, path.length() - 1);
+			}
+			
+			if (!path.endsWith(".groovy")) {
+				path += ".groovy";
+			}
 		}
-		
-		if(path.charAt(0) == '/'){
-			throw new IllegalArgumentException();
-		}
-
-		while(path.endsWith("/")){
-			path = path.substring(0, path.length() - 1);
-		}
-		
-		path += ".groovy";
 		
 		return new File(getScriptDirectory(), path);
 	}

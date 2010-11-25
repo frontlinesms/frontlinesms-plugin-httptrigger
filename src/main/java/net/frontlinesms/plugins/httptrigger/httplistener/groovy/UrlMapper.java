@@ -10,26 +10,26 @@ import java.util.Comparator;
  */
 public class UrlMapper {
 // > PROPERTIES
-	private final String[] paths;
+	private final String[] filePaths;
 
 // > CONSTRUCTORS	
-	private UrlMapper(String[] paths){
-		this.paths = paths;
+	private UrlMapper(String[] filePaths){
+		this.filePaths = filePaths;
 	}
 
 // > ISTANCE METHODS
 	/**
-	 * Maps a String URL according to the pre-specified paths
+	 * Maps a String URL according to the pre-specified files
 	 * 
 	 * @param The URL that needs to be mapped
-	 * @return A String with the mapped path 
+	 * @return A String with the mapped file path 
 	 */
 	public String mapToPath(String url) {
 		if (url == null){
 			url = "";
 		}
 		
-		for (String s : paths) {
+		for (String s : filePaths) {
 			if(url.equals(s)){
 				return s;
 			}
@@ -49,13 +49,13 @@ public class UrlMapper {
 	 * @param The possible URL paths that will be mapped with this UrlMapper - this array may be modified
 	 * @return A new Instance of UrlMapper
 	 */
-	public static UrlMapper create(String... paths) {
-		Arrays.sort(paths, new Comparator<String>(){
+	public static UrlMapper create(String... filePaths) {
+		Arrays.sort(filePaths, new Comparator<String>(){
 			public int compare(String o1, String o2) {
 				return o2.length() - o1.length();
 			}
 		});
 		
-		return new UrlMapper(paths);
+		return new UrlMapper(filePaths);
 	}
 }
