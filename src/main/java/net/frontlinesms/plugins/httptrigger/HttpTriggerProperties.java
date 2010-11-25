@@ -18,7 +18,7 @@ public class HttpTriggerProperties extends UserHomeFilePropertySet {
 	public static final String PROP_AUTOSTART = "listener.autostart"; // FIXME this should be private
 	public static final String PROP_LISTEN_PORT = "listener.port"; // FIXME this should be private
 	private static final String PROP_SCRIPT_FILE_PATHS = "script.file.path";
-	private static final String PROP_IGNORE = "ignore";
+	private static final String PROP_IGNORE_PATHS = "ignore.path";
 	
 	/** Singleton instance of this class */
 	private static HttpTriggerProperties INSTANCE;
@@ -49,7 +49,7 @@ public class HttpTriggerProperties extends UserHomeFilePropertySet {
 	}
 	
 	public String[] getIgnoreList() {
-		return super.getPropertyValues(PROP_IGNORE);
+		return super.getPropertyValues(PROP_IGNORE_PATHS, "favicon.ico");
 	}
 
 //> STATIC FACTORIES

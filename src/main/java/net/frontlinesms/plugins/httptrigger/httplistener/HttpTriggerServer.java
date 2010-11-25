@@ -54,7 +54,7 @@ public class HttpTriggerServer extends Thread implements HttpTriggerListener {
 		connector.setPort(port);
 		server.setConnectors(new Connector[]{connector});
 		
-		Handler handler = new SimpleFrontlineSmsHttpHandler(ignoreList, this.eventListener, groovyRequestHandler);
+		Handler handler = new SimpleFrontlineSmsHttpHandler(this.eventListener, ignoreList, groovyRequestHandler);
 		server.setHandler(handler);
 	}
 
@@ -67,7 +67,7 @@ public class HttpTriggerServer extends Thread implements HttpTriggerListener {
 //> INSTANCE METHODS
 	/** Start listening. */
 	public void run() {
-		this.eventListener.log(InternationalisationUtils.getI18NString(I18N_STARTING_ON_PORT, String.valueOf(this.getPort())));
+		this.eventListener.log(InternationalisationUtils.getI18nString(I18N_STARTING_ON_PORT, String.valueOf(this.getPort())));
 		try {
 			server.start();
 		} catch (Exception ex) {
@@ -84,12 +84,12 @@ public class HttpTriggerServer extends Thread implements HttpTriggerListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.eventListener.log(InternationalisationUtils.getI18NString(I18N_TERMINATED_ON_PORT, String.valueOf(this.getPort())));//"Listener terminated on port: " + this.getPort());
+		this.eventListener.log(InternationalisationUtils.getI18nString(I18N_TERMINATED_ON_PORT, String.valueOf(this.getPort())));
 	}
 
 	/** Request the server to stop listening. */
 	public void pleaseStop() {
-		this.eventListener.log(InternationalisationUtils.getI18NString(I18N_TERMINATING_ON_PORT, String.valueOf(this.getPort())));//"Terminating listener on port: " + this.getPort());
+		this.eventListener.log(InternationalisationUtils.getI18nString(I18N_TERMINATING_ON_PORT, String.valueOf(this.getPort())));
 		try {
 			this.server.stop();
 		} catch (Exception ex) {

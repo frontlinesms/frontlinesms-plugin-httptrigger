@@ -45,7 +45,7 @@ public class GroovyUrlRequestHandler implements SimpleUrlRequestHandler {
 	 * @see net.frontlinesms.plugins.httptrigger.httplistener.SimpleUrlRequestHandler#shouldHandle(java.lang.String)
 	 */
 	public boolean shouldHandle(String requestUri) {
-		this.listener.log(InternationalisationUtils.getI18NString(AbstractSimpleUrlRequestHandler.I18N_PROCESSING_REQUEST, requestUri.toString()));
+		this.listener.log(InternationalisationUtils.getI18nString(AbstractSimpleUrlRequestHandler.I18N_PROCESSING_REQUEST, requestUri.toString()));
 		return true;
 	}
 
@@ -57,16 +57,16 @@ public class GroovyUrlRequestHandler implements SimpleUrlRequestHandler {
 		File groovyScript = scriptFinder.mapToFile(scriptPath);
 		
 		if(!groovyScript.isFile()) {
-			listener.log(InternationalisationUtils.getI18NString(I18N_SCRIPT_NOT_FOUND, groovyScript.getAbsolutePath()));
+			listener.log(InternationalisationUtils.getI18nString(I18N_SCRIPT_NOT_FOUND, groovyScript.getAbsolutePath()));
 			return ResponseType.FAILURE;
 		} else {
-			listener.log(InternationalisationUtils.getI18NString(I18N_SCRIPT_URL_MAPPED, groovyScript.getAbsolutePath()));
+			listener.log(InternationalisationUtils.getI18nString(I18N_SCRIPT_URL_MAPPED, groovyScript.getAbsolutePath()));
 		
 			GroovyScriptRunner scriptRunner = new GroovyScriptRunner(groovyScript,
 					new String[]{"boss", "request", "response", "log", "out"},
 					new Object[]{frontlineController, request, response, listener, getPrinter(response)});
 			ResponseType run = scriptRunner.run();
-			listener.log(InternationalisationUtils.getI18NString(I18N_SCRIPT_EXECUTION_COMPLETE));;
+			listener.log(InternationalisationUtils.getI18nString(I18N_SCRIPT_EXECUTION_COMPLETE));;
 			return run;
 		}
 	}

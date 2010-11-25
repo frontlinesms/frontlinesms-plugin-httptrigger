@@ -35,7 +35,7 @@ public abstract class AbstractSimpleUrlRequestHandler implements SimpleUrlReques
 	/** @see net.frontlinesms.plugins.httptrigger.httplistener.SimpleUrlRequestHandler#shouldHandle(java.lang.String) */
 	public boolean shouldHandle(String requestUri) {
 		if (requestUri.startsWith(this.requestStart)) {
-			this.eventListener.log(InternationalisationUtils.getI18NString(I18N_PROCESSING_REQUEST, requestUri.toString()));
+			this.eventListener.log(InternationalisationUtils.getI18nString(I18N_PROCESSING_REQUEST, requestUri.toString()));
 			return true;
 		}
 		

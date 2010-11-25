@@ -34,10 +34,11 @@ public class HttpTriggerPluginController extends BasePluginController implements
 	/** the {@link FrontlineSMS} instance that this plugin is attached to */
 	private FrontlineSMS frontlineController;
 	private GroovyUrlRequestHandler groovyUrlRequestHandler;
-	private final String I18N_IGNORED_REQUESTS = "plugins.httptrigger.ignored.requests";
+	private final String I18N_LOADED_IGNORE_PATH = "plugins.httptrigger.ignored.path.loaded";
+	private final String I18N_LOADED_IGNORE_PATHS = "plugins.httptrigger.ignored.paths.loaded";
 	private final String I18N_LISTENER_STOPPING = "plugins.httptrigger.listener.stopping";
-	private final String I18N_LOADED_SCRIPT_PATHS = "plugins.httptrigger.loaded.script.paths";
-	private final String I18N_REACH_SCRIPT = "plugins.httptrigger.reach.script";
+	private final String I18N_LOADED_SCRIPT_PATHS = "plugins.httptrigger.script.paths.loaded";
+	private final String I18N_LOADED_SCRIPT_PATH = "plugins.httptrigger.script.path.loaded";
 	private final String I18N_SENDING_TO = "plugins.httptrigger.sending.to";
 	
 //> CONSTRUCTORS
@@ -51,15 +52,22 @@ public class HttpTriggerPluginController extends BasePluginController implements
 		tabController.setTabComponent(httpTriggerTab);
 		tabController.initFields();
 		
-		String[] scriptPaths = HttpTriggerProperties.getInstance().getScriptFilePaths();
-		log(InternationalisationUtils.getI18NString(I18N_LOADED_SCRIPT_PATHS, String.valueOf(scriptPaths.length)));
+		HttpTriggerProperties httpTriggerProperties = HttpTriggerProperties.getInstance();
+		String[] scriptPaths = httpTriggerProperties.getScriptFilePaths();
+		log(InternationalisationUtils.getI18nString(I18N_LOADED_SCRIPT_PATHS, scriptPaths.length));
+		String serverRoot = "http://localhost:" + httpTriggerProperties.getListenPort() + "/";
 		for (int i = 0; i < scriptPaths.length; i++) {
-			log(InternationalisationUtils.getI18NString(I18N_REACH_SCRIPT, String.valueOf(i), "http://localhost:" + HttpTriggerProperties.getInstance().getListenPort() + "/" + scriptPaths[i]));
+			log(InternationalisationUtils.getI18nString(I18N_LOADED_SCRIPT_PATH, String.valueOf(i), serverRoot + scriptPaths[i]));
+		}
+
+		String[] ignoreList = httpTriggerProperties.getIgnoreList();
+		log(InternationalisationUtils.getI18nString(I18N_LOADED_IGNORE_PATHS, ignoreList.length));
+		
+		for(int i=0; i<ignoreList.length; i++) {
+			log(InternationalisationUtils.getI18nString(I18N_LOADED_IGNORE_PATH, String.valueOf(i), serverRoot + ignoreList[i]));
 		}
 		
-		log(InternationalisationUtils.getI18NString(I18N_IGNORED_REQUESTS, String.valueOf(HttpTriggerProperties.getInstance().getIgnoreList().length)));
-		
-		if(HttpTriggerProperties.getInstance().isAutostart()) {
+		if(httpTriggerProperties.isAutostart()) {
 			// Start the listener here so that all fields are updated properly.
 			// Starting here is little different from starting in init() with the
 			// current plugin lifecycle - the plugin is only enabled when visible.
@@ -90,6 +98,7 @@ public class HttpTriggerPluginController extends BasePluginController implements
 	 */
 	public void startListener() {
 		this.stopListener();
+		
 		int portNumber = HttpTriggerProperties.getInstance().getListenPort();
 		String[] ignoreList = HttpTriggerProperties.getInstance().getIgnoreList();
 		
@@ -101,7 +110,7 @@ public class HttpTriggerPluginController extends BasePluginController implements
 	public void stopListener() {
 		if(this.httpListener != null) {
 			this.httpListener.pleaseStop();
-			this.log(InternationalisationUtils.getI18NString(I18N_LISTENER_STOPPING, this.httpListener.toString()));
+			this.log(InternationalisationUtils.getI18nString(I18N_LISTENER_STOPPING, this.httpListener.toString()));
 			this.httpListener = null;
 		}
 	}
@@ -123,7 +132,7 @@ public class HttpTriggerPluginController extends BasePluginController implements
 	
 	/** @see net.frontlinesms.plugins.httptrigger.HttpTriggerEventListener#sendSms(java.lang.String, java.lang.String) */
 	public void sendSms(String toPhoneNumber, String message) {
-		this.log(InternationalisationUtils.getI18NString(I18N_SENDING_TO, toPhoneNumber, message));
+		this.log(InternationalisationUtils.getI18nString(I18N_SENDING_TO, toPhoneNumber, message));
 		frontlineController.sendTextMessage(toPhoneNumber, message);
 	}
 

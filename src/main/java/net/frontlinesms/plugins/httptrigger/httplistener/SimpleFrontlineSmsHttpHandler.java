@@ -40,34 +40,18 @@ class SimpleFrontlineSmsHttpHandler extends AbstractHandler {
 	 * @param ignoreList 
 	 * @param eventListener value for {@link #eventListener}.
 	 */
-	SimpleFrontlineSmsHttpHandler(final String[] ignoreList, HttpTriggerEventListener eventListener, SimpleUrlRequestHandler groovyRequestHandler) {
+	SimpleFrontlineSmsHttpHandler(HttpTriggerEventListener eventListener, final String[] ignoreList, SimpleUrlRequestHandler groovyRequestHandler) {
 		this.eventListener = eventListener;
 		
 		// Handler with catches and ignores the unwanted requests
-		this.handlers.add(new AbstractSimpleUrlRequestHandler("Ignore", eventListener) {
-			@Override
-			public boolean shouldHandle(String requestUri) {
-				for (String ignoredRequest : ignoreList) {
-					if (requestUri.matches(ignoredRequest)) {
-						return true;
-					}
-				}
-				
-				return false;
-			}
-			
-			@Override
-			public boolean handle(String[] requestParts) {
-				return false;
-			}
-		});
+		this.handlers.add(new RequestIgnoreHandler(ignoreList));
 		
 		// Add handler for TEST command - just check if the server is running
 		this.handlers.add(new AbstractSimpleUrlRequestHandler("test/", eventListener) {
 			@Override
 			public boolean handle(String[] requestParts) {
 				// URL triggered this handler successfully, so log it and return true
-				SimpleFrontlineSmsHttpHandler.this.eventListener.log(InternationalisationUtils.getI18NString(I18N_TEST_TRIGGER_TRIPPED));
+				SimpleFrontlineSmsHttpHandler.this.eventListener.log(InternationalisationUtils.getI18nString(I18N_TEST_TRIGGER_TRIPPED));
 				return true;
 			}
 		});
@@ -77,7 +61,7 @@ class SimpleFrontlineSmsHttpHandler extends AbstractHandler {
 			public boolean handle(String[] requestParts) {
 				// N.B. the request parts will ignore message parts if there are non-URL-encoded / characters in the message.  This is intentional.
 				if(requestParts.length < 2) {
-					SimpleFrontlineSmsHttpHandler.this.eventListener.log(InternationalisationUtils.getI18NString(I18N_NOT_ENOUGH_PARAMS));
+					SimpleFrontlineSmsHttpHandler.this.eventListener.log(InternationalisationUtils.getI18nString(I18N_NOT_ENOUGH_PARAMS));
 					return false;
 				}
 				String toPhoneNumber = requestParts[0];
@@ -137,7 +121,7 @@ class SimpleFrontlineSmsHttpHandler extends AbstractHandler {
 			}
 		}
 		
-		this.eventListener.log(InternationalisationUtils.getI18NString(I18N_NO_HANDLER_FOUND, requestUriString));
+		this.eventListener.log(InternationalisationUtils.getI18nString(I18N_NO_HANDLER_FOUND, requestUriString));
 		return ResponseType.FAILURE;
 	}
 

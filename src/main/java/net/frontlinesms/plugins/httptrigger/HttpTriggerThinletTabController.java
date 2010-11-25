@@ -110,7 +110,7 @@ private EventBus eventBus;
 			portNumber = Integer.parseInt(portNumberAsString.trim());
 		} catch(NumberFormatException ex) {
 			// Port number failed to parse.  Warn the user and do not change the state of the listener 
-			this.ui.alert(InternationalisationUtils.getI18NString(I18N_INVALID_PORT_NUMBER));
+			this.ui.alert(InternationalisationUtils.getI18nString(I18N_INVALID_PORT_NUMBER));
 			return false;
 		}
 		
