@@ -34,9 +34,12 @@ public class HttpTriggerPluginController extends BasePluginController implements
 	/** the {@link FrontlineSMS} instance that this plugin is attached to */
 	private FrontlineSMS frontlineController;
 	private GroovyUrlRequestHandler groovyUrlRequestHandler;
-	private final String I18N_SENDING_TO = "plugins.httptrigger.sending.to";
+	private final String I18N_IGNORED_REQUESTS = "plugins.httptrigger.ignored.requests";
 	private final String I18N_LISTENER_STOPPING = "plugins.httptrigger.listener.stopping";
-
+	private final String I18N_LOADED_SCRIPT_PATHS = "plugins.httptrigger.loaded.script.paths";
+	private final String I18N_REACH_SCRIPT = "plugins.httptrigger.reach.script";
+	private final String I18N_SENDING_TO = "plugins.httptrigger.sending.to";
+	
 //> CONSTRUCTORS
 
 //> ACCESSORS
@@ -49,10 +52,12 @@ public class HttpTriggerPluginController extends BasePluginController implements
 		tabController.initFields();
 		
 		String[] scriptPaths = HttpTriggerProperties.getInstance().getScriptFilePaths();
-		log("Loaded script paths: " + scriptPaths.length);
+		log(InternationalisationUtils.getI18NString(I18N_LOADED_SCRIPT_PATHS, String.valueOf(scriptPaths.length)));
 		for (int i = 0; i < scriptPaths.length; i++) {
-			log("Script " + i + ". http://localhost:" + HttpTriggerProperties.getInstance().getListenPort() + "/" + scriptPaths[i]);
+			log(InternationalisationUtils.getI18NString(I18N_REACH_SCRIPT, String.valueOf(i), "http://localhost:" + HttpTriggerProperties.getInstance().getListenPort() + "/" + scriptPaths[i]));
 		}
+		
+		log(InternationalisationUtils.getI18NString(I18N_IGNORED_REQUESTS, String.valueOf(HttpTriggerProperties.getInstance().getIgnoreList().length)));
 		
 		if(HttpTriggerProperties.getInstance().isAutostart()) {
 			// Start the listener here so that all fields are updated properly.

@@ -22,7 +22,11 @@ import net.frontlinesms.ui.i18n.InternationalisationUtils;
  */
 public class GroovyUrlRequestHandler implements SimpleUrlRequestHandler {
 	
-//> INSTANCE PROPERTIES
+	private static final String I18N_SCRIPT_URL_MAPPED = "plugins.httptrigger.script.url.mapped";
+	private static final String I18N_SCRIPT_NOT_FOUND = "plugins.httptrigger.script.not.found";
+	private static final String I18N_SCRIPT_EXECUTION_COMPLETE = "plugins.httptrigger.script.execution.complete";
+	
+	//> INSTANCE PROPERTIES
 	private final HttpTriggerEventListener listener;
 	private final FrontlineSMS frontlineController;
 	private final UrlMapper urlMapper;
@@ -53,16 +57,16 @@ public class GroovyUrlRequestHandler implements SimpleUrlRequestHandler {
 		File groovyScript = scriptFinder.mapToFile(scriptPath);
 		
 		if(!groovyScript.isFile()) {
-			listener.log("Script not found: " + groovyScript.getAbsolutePath());
+			listener.log(InternationalisationUtils.getI18NString(I18N_SCRIPT_NOT_FOUND, groovyScript.getAbsolutePath()));
 			return ResponseType.FAILURE;
 		} else {
-			listener.log("URL mapped to script: " + groovyScript.getAbsolutePath());
+			listener.log(InternationalisationUtils.getI18NString(I18N_SCRIPT_URL_MAPPED, groovyScript.getAbsolutePath()));
 		
 			GroovyScriptRunner scriptRunner = new GroovyScriptRunner(groovyScript,
 					new String[]{"boss", "request", "response", "log", "out"},
 					new Object[]{frontlineController, request, response, listener, getPrinter(response)});
 			ResponseType run = scriptRunner.run();
-			listener.log("Script execution complete.");
+			listener.log(InternationalisationUtils.getI18NString(I18N_SCRIPT_EXECUTION_COMPLETE));;
 			return run;
 		}
 	}
