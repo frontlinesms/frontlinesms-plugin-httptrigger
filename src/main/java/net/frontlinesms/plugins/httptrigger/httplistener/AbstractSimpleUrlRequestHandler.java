@@ -6,6 +6,9 @@ package net.frontlinesms.plugins.httptrigger.httplistener;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.frontlinesms.plugins.httptrigger.HttpTriggerEventListener;
+import net.frontlinesms.ui.i18n.InternationalisationUtils;
+
 /**
  * @author Alex
  */
@@ -15,11 +18,15 @@ public abstract class AbstractSimpleUrlRequestHandler implements SimpleUrlReques
 //> INSTANCE PROPERTIES
 	/** The start of URIs that this {@link SimpleUrlRequestHandler} should handle. */
 	private final String requestStart;
+	private HttpTriggerEventListener eventListener;
+	
+	public static final String I18N_PROCESSING_REQUEST = "plugins.httptrigger.processing.request";
 
 //> CONSTRUCTORS
 	/** @param requestStart value for {@link #requestStart} */
-	public AbstractSimpleUrlRequestHandler(String requestStart) {
+	public AbstractSimpleUrlRequestHandler(String requestStart, HttpTriggerEventListener eventListener) {
 		this.requestStart = requestStart;
+		this.eventListener = eventListener;
 	}
 
 //> ACCESSORS
@@ -27,7 +34,12 @@ public abstract class AbstractSimpleUrlRequestHandler implements SimpleUrlReques
 //> INSTANCE METHODS
 	/** @see net.frontlinesms.plugins.httptrigger.httplistener.SimpleUrlRequestHandler#shouldHandle(java.lang.String) */
 	public boolean shouldHandle(String requestUri) {
-		return requestUri.startsWith(this.requestStart);
+		if (requestUri.startsWith(this.requestStart)) {
+			this.eventListener.log(InternationalisationUtils.getI18NString(I18N_PROCESSING_REQUEST, requestUri.toString()));
+			return true;
+		}
+		
+		return false;
 	}
 	
 	/**

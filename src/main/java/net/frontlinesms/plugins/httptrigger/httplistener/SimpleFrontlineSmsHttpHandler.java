@@ -32,19 +32,38 @@ class SimpleFrontlineSmsHttpHandler extends AbstractHandler {
 	
 	private final String I18N_NO_HANDLER_FOUND = "plugins.httptrigger.no.handler.found";
 	private final String I18N_NOT_ENOUGH_PARAMS = "plugins.httptrigger.not.enough.params";
-	private final String I18N_PROCESSING_REQUEST = "plugins.httptrigger.processing.request";
 	private final String I18N_TEST_TRIGGER_TRIPPED = "plugins.httptrigger.test.trigger.tripped";
 	
 //> CONSTRUCTORS
 	/**
 	 * Create a new {@link SimpleFrontlineSmsHttpHandler}.
+	 * @param ignoreList 
 	 * @param eventListener value for {@link #eventListener}.
 	 */
-	SimpleFrontlineSmsHttpHandler(HttpTriggerEventListener eventListener, SimpleUrlRequestHandler groovyRequestHandler) {
+	SimpleFrontlineSmsHttpHandler(final String[] ignoreList, HttpTriggerEventListener eventListener, SimpleUrlRequestHandler groovyRequestHandler) {
 		this.eventListener = eventListener;
 		
+		// Handler with catches and ignores the unwanted requests
+		this.handlers.add(new AbstractSimpleUrlRequestHandler("Ignore", eventListener) {
+			@Override
+			public boolean shouldHandle(String requestUri) {
+				for (String ignoredRequest : ignoreList) {
+					if (requestUri.matches(ignoredRequest)) {
+						return true;
+					}
+				}
+				
+				return false;
+			}
+			
+			@Override
+			public boolean handle(String[] requestParts) {
+				return false;
+			}
+		});
+		
 		// Add handler for TEST command - just check if the server is running
-		this.handlers.add(new AbstractSimpleUrlRequestHandler("test/") {
+		this.handlers.add(new AbstractSimpleUrlRequestHandler("test/", eventListener) {
 			@Override
 			public boolean handle(String[] requestParts) {
 				// URL triggered this handler successfully, so log it and return true
@@ -54,7 +73,7 @@ class SimpleFrontlineSmsHttpHandler extends AbstractHandler {
 		});
 		
 		// Add handler for SEND SMS commands
-		this.handlers.add(new AbstractSimpleUrlRequestHandler("send/sms/") {
+		this.handlers.add(new AbstractSimpleUrlRequestHandler("send/sms/", eventListener) {
 			public boolean handle(String[] requestParts) {
 				// N.B. the request parts will ignore message parts if there are non-URL-encoded / characters in the message.  This is intentional.
 				if(requestParts.length < 2) {
@@ -109,8 +128,6 @@ class SimpleFrontlineSmsHttpHandler extends AbstractHandler {
 	 * @return <code>true</code> if the event was processed successfully; <code>false</code> if there was no processor available, or processing failed. 
 	 */
 	private ResponseType processRequestFromUrl(final HttpURI requestUri, HttpServletRequest request, HttpServletResponse response) {
-		this.eventListener.log(InternationalisationUtils.getI18NString(I18N_PROCESSING_REQUEST, requestUri.toString()));
-
 		// Get this URI string, stripping leading '/' character
 		String requestUriString = requestUri.toString().substring(1);
 		

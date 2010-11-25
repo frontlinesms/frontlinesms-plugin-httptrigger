@@ -30,6 +30,7 @@ public class HttpTriggerServer extends Thread implements HttpTriggerListener {
 	private final int port;
 	/** The Jetty server that will listen for HTTP connections. */
 	private final Server server;
+
 	private final String I18N_STARTING_ON_PORT = "plugins.httptrigger.starting.on.port";
 	private final String I18N_TERMINATED_ON_PORT = "plugins.httptrigger.terminated.on.port";
 	private final String I18N_TERMINATING_ON_PORT = "plugins.httptrigger.terminating.on.port";
@@ -38,9 +39,10 @@ public class HttpTriggerServer extends Thread implements HttpTriggerListener {
 	/**
 	 * Create a new {@link HttpTriggerServer}.
 	 * @param eventListener value for {@link #eventListener}
+	 * @param ignoreList 
 	 * @param port value for {@link #port}
 	 */
-	public HttpTriggerServer(HttpTriggerEventListener eventListener, SimpleUrlRequestHandler groovyRequestHandler, int port) {
+	public HttpTriggerServer(HttpTriggerEventListener eventListener, String[] ignoreList, SimpleUrlRequestHandler groovyRequestHandler, int port) {
 		// Give this Thread a meaningful name
 		super(HttpTriggerServer.class.getSimpleName() + "; port: " + port);
 		
@@ -52,7 +54,7 @@ public class HttpTriggerServer extends Thread implements HttpTriggerListener {
 		connector.setPort(port);
 		server.setConnectors(new Connector[]{connector});
 		
-		Handler handler = new SimpleFrontlineSmsHttpHandler(this.eventListener, groovyRequestHandler);
+		Handler handler = new SimpleFrontlineSmsHttpHandler(ignoreList, this.eventListener, groovyRequestHandler);
 		server.setHandler(handler);
 	}
 

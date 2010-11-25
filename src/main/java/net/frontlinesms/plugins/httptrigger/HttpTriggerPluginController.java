@@ -86,7 +86,9 @@ public class HttpTriggerPluginController extends BasePluginController implements
 	public void startListener() {
 		this.stopListener();
 		int portNumber = HttpTriggerProperties.getInstance().getListenPort();
-		this.httpListener = new HttpTriggerServer(this, groovyUrlRequestHandler, portNumber);
+		String[] ignoreList = HttpTriggerProperties.getInstance().getIgnoreList();
+		
+		this.httpListener = new HttpTriggerServer(this, ignoreList, groovyUrlRequestHandler, portNumber);
 		this.httpListener.start();
 	}
 

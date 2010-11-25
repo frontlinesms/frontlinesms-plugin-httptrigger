@@ -6,13 +6,13 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
 
 import net.frontlinesms.FrontlineSMS;
-import net.frontlinesms.FrontlineUtils;
 import net.frontlinesms.plugins.httptrigger.HttpTriggerEventListener;
+import net.frontlinesms.plugins.httptrigger.httplistener.AbstractSimpleUrlRequestHandler;
 import net.frontlinesms.plugins.httptrigger.httplistener.ResponseType;
 import net.frontlinesms.plugins.httptrigger.httplistener.SimpleUrlRequestHandler;
+import net.frontlinesms.ui.i18n.InternationalisationUtils;
 
 /**
  * Class to Handle calls to the {@link GroovyScriptRunner} given a URI Request
@@ -23,7 +23,6 @@ import net.frontlinesms.plugins.httptrigger.httplistener.SimpleUrlRequestHandler
 public class GroovyUrlRequestHandler implements SimpleUrlRequestHandler {
 	
 //> INSTANCE PROPERTIES
-	private final Logger log = FrontlineUtils.getLogger(this.getClass());
 	private final HttpTriggerEventListener listener;
 	private final FrontlineSMS frontlineController;
 	private final UrlMapper urlMapper;
@@ -42,6 +41,7 @@ public class GroovyUrlRequestHandler implements SimpleUrlRequestHandler {
 	 * @see net.frontlinesms.plugins.httptrigger.httplistener.SimpleUrlRequestHandler#shouldHandle(java.lang.String)
 	 */
 	public boolean shouldHandle(String requestUri) {
+		this.listener.log(InternationalisationUtils.getI18NString(AbstractSimpleUrlRequestHandler.I18N_PROCESSING_REQUEST, requestUri.toString()));
 		return true;
 	}
 
