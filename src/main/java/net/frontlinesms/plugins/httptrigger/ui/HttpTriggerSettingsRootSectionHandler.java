@@ -20,10 +20,12 @@ public class HttpTriggerSettingsRootSectionHandler extends BaseSectionHandler im
 	private static final String SECTION_ITEM_PORT_NUMBER = "PLUGINS_HTTPTRIGGER_PORT_NUMBER";
 	private static final String SECTION_ITEM_AUTO_START = "PLUGINS_HTTPTRIGGER_AUTO_START";
 	private String pluginName;
+	private String pluginIcon;
 
-	public HttpTriggerSettingsRootSectionHandler (UiGeneratorController ui, String pluginName) {
+	public HttpTriggerSettingsRootSectionHandler (UiGeneratorController ui, String pluginName, String pluginIcon) {
 		super(ui);
 		this.pluginName = pluginName;
+		this.pluginIcon = pluginIcon;
 	}
 	
 	protected void init() {
@@ -71,10 +73,10 @@ public class HttpTriggerSettingsRootSectionHandler extends BaseSectionHandler im
 		
 		try {
 			if (Integer.parseInt(this.uiController.getText(find(UI_COMPONENT_TF_PORT))) <= 0) {
-				validationMessages.add(new FrontlineValidationMessage(I18N_SETTINGS_MESSAGE_INVALID_PORT, null));
+				validationMessages.add(new FrontlineValidationMessage(I18N_SETTINGS_MESSAGE_INVALID_PORT, null, this.pluginIcon));
 			}
 		} catch (NumberFormatException e) {
-			validationMessages.add(new FrontlineValidationMessage(I18N_SETTINGS_MESSAGE_INVALID_PORT, null));
+			validationMessages.add(new FrontlineValidationMessage(I18N_SETTINGS_MESSAGE_INVALID_PORT, null, this.pluginIcon));
 		}
 		
 		return validationMessages;
@@ -84,7 +86,7 @@ public class HttpTriggerSettingsRootSectionHandler extends BaseSectionHandler im
 		return this.pluginName;
 	}
 
-	public Object getSectionNode(String pluginIcon) {
-		return createSectionNode(getTitle(), this, pluginIcon);
+	public Object getSectionNode() {
+		return createSectionNode(getTitle(), this, this.pluginIcon);
 	}
 }
