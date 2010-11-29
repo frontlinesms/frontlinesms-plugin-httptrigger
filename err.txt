@@ -1,0 +1,94 @@
++ Error stacktraces are turned on.
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Building FrontlineSMS HTTP Trigger Plugin
+[INFO]    task-segment: [deploy]
+[INFO] ------------------------------------------------------------------------
+[INFO] [resources:resources {execution: default-resources}]
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 10 resources
+[INFO] [compiler:compile {execution: default-compile}]
+[INFO] Nothing to compile - all classes are up to date
+[INFO] [resources:testResources {execution: default-testResources}]
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory c:\Users\Morgan\Documents\workspace\morgan-frontline-plugin-httptrigger\src\test\resources
+[INFO] [compiler:testCompile {execution: default-testCompile}]
+[INFO] Nothing to compile - all classes are up to date
+[INFO] [surefire:test {execution: default-test}]
+[INFO] Surefire report directory: c:\Users\Morgan\Documents\workspace\morgan-frontline-plugin-httptrigger\target\surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running net.frontlinesms.plugins.httptrigger.httplistener.groovy.ScriptFinderTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.206 sec
+Running net.frontlinesms.plugins.httptrigger.httplistener.UrlMapperTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.013 sec
+
+Results :
+
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] [jar:jar {execution: default-jar}]
+[INFO] Preparing source:jar
+[WARNING] Removing: jar from forked lifecycle, to prevent recursive invocation.
+[INFO] No goals needed for project - skipping
+[INFO] [source:jar {execution: default}]
+[INFO] Building jar: c:\Users\Morgan\Documents\workspace\morgan-frontline-plugin-httptrigger\target\frontlinesms-plugin-httptrigger-0.01.20-SNAPSHOT-sources.jar
+[INFO] [install:install {execution: default-install}]
+[INFO] Installing c:\Users\Morgan\Documents\workspace\morgan-frontline-plugin-httptrigger\target\frontlinesms-plugin-httptrigger-0.01.20-SNAPSHOT.jar to C:\Users\Morgan\.m2\repository\net\frontlinesms\plugins\frontlinesms-plugin-httptrigger\0.01.20-SNAPSHOT\frontlinesms-plugin-httptrigger-0.01.20-SNAPSHOT.jar
+[INFO] Installing c:\Users\Morgan\Documents\workspace\morgan-frontline-plugin-httptrigger\target\frontlinesms-plugin-httptrigger-0.01.20-SNAPSHOT-sources.jar to C:\Users\Morgan\.m2\repository\net\frontlinesms\plugins\frontlinesms-plugin-httptrigger\0.01.20-SNAPSHOT\frontlinesms-plugin-httptrigger-0.01.20-SNAPSHOT-sources.jar
+[INFO] [deploy:deploy {execution: default-deploy}]
+[INFO] Retrieving previous build number from frontlinesms.repo
+[INFO] repository metadata for: 'snapshot net.frontlinesms.plugins:frontlinesms-plugin-httptrigger:0.01.20-SNAPSHOT' could not be found on repository: frontlinesms.repo, so will be created
+Uploading: http://dev.frontlinesms.com/m2repo/net/frontlinesms/plugins/frontlinesms-plugin-httptrigger/0.01.20-SNAPSHOT/frontlinesms-plugin-httptrigger-0.01.20-20101129.122055-1.jar
+4/39K8/39K12/39K16/39K20/39K24/39K28/39K32/39K36/39K39/39K[INFO] ------------------------------------------------------------------------
+[ERROR] BUILD ERROR
+[INFO] ------------------------------------------------------------------------
+[INFO] Error deploying artifact: Failed to transfer file: http://dev.frontlinesms.com/m2repo/net/frontlinesms/plugins/frontlinesms-plugin-httptrigger/0.01.20-SNAPSHOT/frontlinesms-plugin-httptrigger-0.01.20-20101129.122055-1.jar. Return code is: 405
+
+[INFO] ------------------------------------------------------------------------
+[INFO] Trace
+org.apache.maven.lifecycle.LifecycleExecutionException: Error deploying artifact: Failed to transfer file: http://dev.frontlinesms.com/m2repo/net/frontlinesms/plugins/frontlinesms-plugin-httptrigger/0.01.20-SNAPSHOT/frontlinesms-plugin-httptrigger-0.01.20-20101129.122055-1.jar. Return code is: 405
+	at org.apache.maven.lifecycle.DefaultLifecycleExecutor.executeGoals(DefaultLifecycleExecutor.java:719)
+	at org.apache.maven.lifecycle.DefaultLifecycleExecutor.executeGoalWithLifecycle(DefaultLifecycleExecutor.java:556)
+	at org.apache.maven.lifecycle.DefaultLifecycleExecutor.executeGoal(DefaultLifecycleExecutor.java:535)
+	at org.apache.maven.lifecycle.DefaultLifecycleExecutor.executeGoalAndHandleFailures(DefaultLifecycleExecutor.java:387)
+	at org.apache.maven.lifecycle.DefaultLifecycleExecutor.executeTaskSegments(DefaultLifecycleExecutor.java:348)
+	at org.apache.maven.lifecycle.DefaultLifecycleExecutor.execute(DefaultLifecycleExecutor.java:180)
+	at org.apache.maven.DefaultMaven.doExecute(DefaultMaven.java:328)
+	at org.apache.maven.DefaultMaven.execute(DefaultMaven.java:138)
+	at org.apache.maven.cli.MavenCli.main(MavenCli.java:362)
+	at org.apache.maven.cli.compat.CompatibleMain.main(CompatibleMain.java:60)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.codehaus.classworlds.Launcher.launchEnhanced(Launcher.java:315)
+	at org.codehaus.classworlds.Launcher.launch(Launcher.java:255)
+	at org.codehaus.classworlds.Launcher.mainWithExitCode(Launcher.java:430)
+	at org.codehaus.classworlds.Launcher.main(Launcher.java:375)
+Caused by: org.apache.maven.plugin.MojoExecutionException: Error deploying artifact: Failed to transfer file: http://dev.frontlinesms.com/m2repo/net/frontlinesms/plugins/frontlinesms-plugin-httptrigger/0.01.20-SNAPSHOT/frontlinesms-plugin-httptrigger-0.01.20-20101129.122055-1.jar. Return code is: 405
+	at org.apache.maven.plugin.deploy.DeployMojo.execute(DeployMojo.java:195)
+	at org.apache.maven.plugin.DefaultPluginManager.executeMojo(DefaultPluginManager.java:490)
+	at org.apache.maven.lifecycle.DefaultLifecycleExecutor.executeGoals(DefaultLifecycleExecutor.java:694)
+	... 17 more
+Caused by: org.apache.maven.artifact.deployer.ArtifactDeploymentException: Error deploying artifact: Failed to transfer file: http://dev.frontlinesms.com/m2repo/net/frontlinesms/plugins/frontlinesms-plugin-httptrigger/0.01.20-SNAPSHOT/frontlinesms-plugin-httptrigger-0.01.20-20101129.122055-1.jar. Return code is: 405
+	at org.apache.maven.artifact.deployer.DefaultArtifactDeployer.deploy(DefaultArtifactDeployer.java:121)
+	at org.apache.maven.plugin.deploy.DeployMojo.execute(DeployMojo.java:173)
+	... 19 more
+Caused by: org.apache.maven.wagon.TransferFailedException: Failed to transfer file: http://dev.frontlinesms.com/m2repo/net/frontlinesms/plugins/frontlinesms-plugin-httptrigger/0.01.20-SNAPSHOT/frontlinesms-plugin-httptrigger-0.01.20-20101129.122055-1.jar. Return code is: 405
+	at org.apache.maven.wagon.providers.http.LightweightHttpWagon.finishPutTransfer(LightweightHttpWagon.java:205)
+	at org.apache.maven.wagon.AbstractWagon.putTransfer(AbstractWagon.java:413)
+	at org.apache.maven.wagon.AbstractWagon.transfer(AbstractWagon.java:392)
+	at org.apache.maven.wagon.AbstractWagon.putTransfer(AbstractWagon.java:365)
+	at org.apache.maven.wagon.StreamWagon.put(StreamWagon.java:163)
+	at org.apache.maven.artifact.manager.DefaultWagonManager.putRemoteFile(DefaultWagonManager.java:317)
+	at org.apache.maven.artifact.manager.DefaultWagonManager.putArtifact(DefaultWagonManager.java:227)
+	at org.apache.maven.artifact.deployer.DefaultArtifactDeployer.deploy(DefaultArtifactDeployer.java:107)
+	... 20 more
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 5 seconds
+[INFO] Finished at: Mon Nov 29 13:20:56 CET 2010
+[INFO] Final Memory: 16M/40M
+[INFO] ------------------------------------------------------------------------
