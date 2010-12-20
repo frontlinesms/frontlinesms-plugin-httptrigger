@@ -3,7 +3,7 @@
 	<groupId>net.frontlinesms.plugins</groupId>
 	<artifactId>frontlinesms-plugin-httptrigger</artifactId>
 	<name>FrontlineSMS HTTP Trigger Plugin</name>
-	<version>0.01.19-SNAPSHOT</version>
+	<version>0.01.21-SNAPSHOT</version>
 	<description>HTTP Trigger plugin for FrontlineSMS</description>
 	<licenses>
 		<license>
@@ -39,6 +39,11 @@
 	
 	<repositories>
 		<repository>
+			<id>frontlinesms.repo</id>
+			<name>FrontlineSMS Maven repository</name>
+			<url>http://dev.frontlinesms.com/m2repo</url>
+		</repository>
+		<repository>
 			<id>cleone.net.repo</id>
 			<name>Temporary FrontlineSMS repository on cleone.net</name>
 			<url>http://m2repo.cleone.net</url>
@@ -53,9 +58,9 @@
 	
 	<distributionManagement>
 		<repository>
-			<id>cleone.net.repo</id>
-			<name>Temporary FrontlineSMS repository on cleone.net</name>
-			<url>ftp://m2repo.cleone.net</url>
+			<id>frontlinesms.repo</id>
+			<name>FrontlineSMS Maven repository</name>
+			<url>ftp://dev.frontlinesms.com/</url>
 		</repository>
 	</distributionManagement>
 
@@ -104,7 +109,7 @@
 		<dependency>
 			<groupId>net.frontlinesms.core</groupId>
 			<artifactId>frontlinesms</artifactId>
-			<version>1.7-Beta1</version>
+			<version>1.7.00-Beta2</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -124,7 +129,7 @@
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy</artifactId>
-			<version>1.7.4</version>
+			<version>1.7.5</version>
 		</dependency>
 		
 				<!-- Test Dependencies -->

@@ -1,4 +1,4 @@
-<tab icon="/icons/big_export.png" text="HTTP Trigger" name=":httpTrigger">
+<tab icon="/icons/big_export.png" text="i18n.plugins.httptrigger.name" name=":httpTrigger">
     <panel bottom="9" columns="2" gap="9" left="9" right="9" top="9" weightx="1" weighty="1">
     	<label icon="/icons/header/httpTrigger.png" valign="top" />
        	<panel columns="1" weighty="1" weightx="1" gap="8" rowspan="2">

@@ -11,12 +11,7 @@ import net.frontlinesms.resources.ResourceUtils;
  * @author Alex Anderson <alex@frontlinesms.com>
  */
 class ScriptFinder {
-	private final File scriptDirectory;
-	
-//> CONSTRUCTORS
-	public ScriptFinder() {
-		this.scriptDirectory = new File(ResourceUtils.getConfigDirectoryPath(), "httptrigger.scripts");
-	}
+	private static final File scriptDirectory = new File(ResourceUtils.getConfigDirectoryPath(), "httptrigger.scripts");;
 	
 //> INSTANCE METHODS
 	/**
@@ -48,7 +43,7 @@ class ScriptFinder {
 	}
 
 	/** @return the root directory that scripts are stored in */
-	private File getScriptDirectory() {
-		return this.scriptDirectory;
+	public static File getScriptDirectory() {
+		return scriptDirectory;
 	}
 }

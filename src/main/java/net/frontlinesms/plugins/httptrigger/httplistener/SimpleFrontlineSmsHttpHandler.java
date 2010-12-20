@@ -67,7 +67,11 @@ class SimpleFrontlineSmsHttpHandler extends AbstractHandler {
 				String toPhoneNumber = requestParts[0];
 				String message = requestParts[1];
 				
-				SimpleFrontlineSmsHttpHandler.this.eventListener.sendSms(FrontlineUtils.urlDecode(toPhoneNumber), FrontlineUtils.urlDecode(message));
+				String urlDecode = FrontlineUtils.urlDecode(toPhoneNumber);
+				if (toPhoneNumber.startsWith("+")) {
+					urlDecode = "+" + urlDecode;
+				}
+				SimpleFrontlineSmsHttpHandler.this.eventListener.sendSms(urlDecode, FrontlineUtils.urlDecode(message));
 				
 				return true;
 			}

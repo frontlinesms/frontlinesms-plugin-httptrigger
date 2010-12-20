@@ -29,12 +29,12 @@ public class HttpTriggerSettingsController implements ThinletUiEventHandler, Plu
 	}
 
 	public UiSettingsSectionHandler getRootPanelHandler() {
-		return new HttpTriggerSettingsRootSectionHandler(this.uiController, this.getTitle());
+		return new HttpTriggerSettingsRootSectionHandler(this.uiController, this.getTitle(), this.pluginIcon);
 	}
 
 	public Object getRootNode() {
-		HttpTriggerSettingsRootSectionHandler rootHandler = new HttpTriggerSettingsRootSectionHandler(this.uiController, this.getTitle());
-		return rootHandler.getSectionNode(pluginIcon);
+		HttpTriggerSettingsRootSectionHandler rootHandler = new HttpTriggerSettingsRootSectionHandler(this.uiController, this.getTitle(), this.pluginIcon);
+		return rootHandler.getSectionNode();
 	}
 
 }
