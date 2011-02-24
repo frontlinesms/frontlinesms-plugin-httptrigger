@@ -7,7 +7,7 @@
 	<description>HTTP Trigger plugin for FrontlineSMS</description>
 	<parent>
 		<groupId>net.frontlinesms.core</groupId>
-		<artifactId>pom-parent</artifactId>
+		<artifactId>frontlinesms-pom-parent</artifactId>
 		<version>1.7.00-beta-4-SNAPSHOT</version>
 		<relativePath>../pom-parent</relativePath>
 	</parent>
