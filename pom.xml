@@ -25,7 +25,6 @@
 		<dependency>
 			<groupId>net.frontlinesms.core</groupId>
 			<artifactId>frontlinesms</artifactId>
-			<version>${frontlinesms.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
