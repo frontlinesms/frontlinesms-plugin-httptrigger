@@ -18,6 +18,11 @@
 	
 	<repositories>
 		<repository>
+			<id>frontlinesms.repo</id>
+			<name>FrontlineSMS Maven repository</name>
+			<url>http://dev.frontlinesms.com/m2repo</url>
+		</repository>
+		<repository>
 			<!-- Repository from the makers of Jetty -->
 			<id>codehaus-release-repo</id>
 			<name>Codehaus Release Repo</name>
