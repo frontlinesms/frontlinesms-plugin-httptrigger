@@ -8,7 +8,7 @@
 	<parent>
 		<groupId>net.frontlinesms.core</groupId>
 		<artifactId>frontlinesms-pom-parent</artifactId>
-		<version>1.7.00-beta-5</version>
+		<version>1.7.00-beta-6-SNAPSHOT</version>
 		<relativePath>../pom-parent</relativePath>
 	</parent>
 
@@ -53,7 +53,7 @@
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy</artifactId>
-			<version>1.7.5</version>
+			<version>1.8.0</version>
 		</dependency>
 	</dependencies>
 </project>
