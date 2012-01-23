@@ -2,11 +2,10 @@ package net.frontlinesms.plugins.httptrigger.httplistener.groovy;
 
 import java.io.File;
 
+import net.frontlinesms.junit.BaseTestCase;
 import net.frontlinesms.plugins.httptrigger.httplistener.groovy.ScriptFinder;
 
-import junit.framework.TestCase;
-
-public class ScriptFinderTest extends TestCase {
+public class ScriptFinderTest extends BaseTestCase {
 	
 	public void testMapToFile(){
 		testMapToFileFails("/");

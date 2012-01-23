@@ -1,9 +1,9 @@
 package net.frontlinesms.plugins.httptrigger.httplistener;
 
+import net.frontlinesms.junit.BaseTestCase;
 import net.frontlinesms.plugins.httptrigger.httplistener.groovy.UrlMapper;
-import junit.framework.TestCase;
 
-public class UrlMapperTest extends TestCase {
+public class UrlMapperTest extends BaseTestCase {
 	UrlMapper mapper;
 	
 //> SETUP

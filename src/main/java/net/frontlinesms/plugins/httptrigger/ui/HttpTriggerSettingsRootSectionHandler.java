@@ -29,17 +29,19 @@ public class HttpTriggerSettingsRootSectionHandler extends BaseSectionHandler im
 	}
 	
 	protected void init() {
-		this.panel = uiController.loadComponentFromFile(UI_SECTION_ROOT, this);
+		this.panel = ui.loadComponentFromFile(UI_SECTION_ROOT, this);
 		
 		HttpTriggerProperties httpTriggerProperties = HttpTriggerProperties.getInstance();
 		String portNumber = Integer.toString(httpTriggerProperties.getListenPort());
 		boolean isAutoStart = httpTriggerProperties.isAutostart();
-		this.uiController.setText(find(UI_COMPONENT_TF_PORT), portNumber);
-		this.uiController.setSelected(find(UI_COMPONENT_CB_AUTO_START), isAutoStart);
+		ui.setText(find(UI_COMPONENT_TF_PORT), portNumber);
+		ui.setSelected(find(UI_COMPONENT_CB_AUTO_START), isAutoStart);
 		
 		this.originalValues.put(SECTION_ITEM_PORT_NUMBER, portNumber);
 		this.originalValues.put(SECTION_ITEM_AUTO_START, isAutoStart);
 	}
+	
+	public void deinit() {}
 	
 	/**
 	 * Called when the "Auto start" checkbox has changed state
@@ -60,8 +62,8 @@ public class HttpTriggerSettingsRootSectionHandler extends BaseSectionHandler im
 	public void save() {
 		// Save the port number
 		HttpTriggerProperties properties = HttpTriggerProperties.getInstance();
-		properties.setListenPort(Integer.parseInt(this.uiController.getText(find(UI_COMPONENT_TF_PORT))));
-		properties.setAutostart(this.uiController.isSelected(find(UI_COMPONENT_CB_AUTO_START)));
+		properties.setListenPort(Integer.parseInt(ui.getText(find(UI_COMPONENT_TF_PORT))));
+		properties.setAutostart(ui.isSelected(find(UI_COMPONENT_CB_AUTO_START)));
 		properties.saveToDisk();
 		
 		this.eventBus.notifyObservers(new AppPropertiesEventNotification(HttpTriggerProperties.class, HttpTriggerProperties.PROP_LISTEN_PORT));
@@ -72,7 +74,7 @@ public class HttpTriggerSettingsRootSectionHandler extends BaseSectionHandler im
 		List<FrontlineValidationMessage> validationMessages = new ArrayList<FrontlineValidationMessage>();
 		
 		try {
-			if (Integer.parseInt(this.uiController.getText(find(UI_COMPONENT_TF_PORT))) <= 0) {
+			if (Integer.parseInt(ui.getText(find(UI_COMPONENT_TF_PORT))) <= 0) {
 				validationMessages.add(new FrontlineValidationMessage(I18N_SETTINGS_MESSAGE_INVALID_PORT, null, this.pluginIcon));
 			}
 		} catch (NumberFormatException e) {
